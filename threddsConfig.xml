@@ -198,6 +198,12 @@
       <maxAge>30 min</maxAge>
     </WCS>
     -->
+    <WCS>
+      <allow>true</allow>
+      <allowRemote>true</allowRemote>
+      <scour>15 min</scour>
+      <maxAge>30 min</maxAge>
+    </WCS>
 
     <!--
     <WMS>
@@ -207,6 +213,12 @@
       <maxImageHeight>2048</maxImageHeight>
     </WMS>
     -->
+    <WMS>
+      <allow>true</allow>
+      <allowRemote>true</allowRemote>
+      <maxImageWidth>2048</maxImageWidth>
+      <maxImageHeight>2048</maxImageHeight>
+    </WMS>
 
     <!--
     <NCISO>

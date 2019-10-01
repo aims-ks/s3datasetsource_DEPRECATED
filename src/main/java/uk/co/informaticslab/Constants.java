@@ -15,7 +15,7 @@ public final class Constants {
 
     public static final int MEGABYTE = 1024 * 1024;
 
-    public static final Regions MY_S3_DATA_REGION = Regions.EU_WEST_2;
+    public static final Regions MY_S3_DATA_REGION = Regions.US_EAST_1;//Regions.EU_WEST_2;
 
     public static AmazonS3 getS3Client() {
         ClientConfiguration config = new ClientConfiguration();

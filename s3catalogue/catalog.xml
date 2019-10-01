@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog name="eReefs model, derived Open Data Catalogue file"
+         xmlns="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0
+           http://www.unidata.ucar.edu/schemas/thredds/InvCatalog.1.0.6.xsd">
+
+    <!-- THREDDS Services: https://www.unidata.ucar.edu/software/tds/current/reference/Services.html -->
+    <service name="all" base="" serviceType="compound">
+        <!-- Works -->
+        <service name="odap" serviceType="OpenDAP" base="/thredds/dodsC/" />
+
+        <!-- Doens't work -->
+        <service name="dap4" serviceType="DAP4" base="/thredds/dap4/" />
+
+        <!-- FIXED! -->
+        <service name="http" serviceType="HTTPServer" base="/thredds/s3FileServer/" />
+
+        <!-- Doens't work -->
+        <service name="wcs" serviceType="WCS" base="/thredds/wcs/" />
+
+        <!-- Works -->
+        <service name="wms" serviceType="WMS" base="/thredds/wms/" />
+
+        <!-- I don't know what this one is -->
+        <!--<service name="ncss" serviceType="NetcdfSubset" base="/thredds/ncss/" />-->
+    </service>
+
+    <catalogRef xlink:title="aims-ereefs-public-test" xlink:href="aims-ereefs-public-test/catalog.xml" name=""/>
+</catalog>

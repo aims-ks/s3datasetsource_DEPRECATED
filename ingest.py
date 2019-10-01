@@ -21,7 +21,7 @@ Bucket names are provided as arguments to the file call.
 AWS credentials must have access to S3.
 """
 
-def write_inventory_names_file(bucket_name, region='eu-west-2'):
+def write_inventory_names_file(bucket_name, region='us-east-1'):
     """
     AWS splits the filenames over a bunch of UID names files.
     For a given date, it defines which files are relevant in
@@ -41,6 +41,9 @@ def write_inventory_names_file(bucket_name, region='eu-west-2'):
     print("Getting manifest for " + inventory_name_prefix)
     filt_objects = bucket.objects.filter(Prefix=inventory_name_prefix)
     filt_object_keys = [filt_object.key for filt_object in filt_objects]
+
+
+
     [manifest_key] = [filt_object_key for filt_object_key in filt_object_keys if filt_object_key.endswith('json')]
 
     with tempfile.NamedTemporaryFile(suffix='.json', delete=False) as f:

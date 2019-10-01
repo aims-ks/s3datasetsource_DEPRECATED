@@ -1,0 +1,283 @@
+# THREDDS Docker container
+
+## TODO
+
+1. Delete content of templates and add out own template
+2. Delete python scripts
+3. Write S3HarvesterController to generate catalog.xml files on request (will be called by cron on Host)
+
+## Doc
+
+Documentation about how to create an updated docker image for THREDDS with S3 support, configured for eReefs.
+
+1. Download the S3 THREDDS plugin:
+
+    https://github.com/informatics-lab/s3datasetsource
+
+    ```
+    $ git clone https://github.com/informatics-lab/s3datasetsource.git
+    ```
+
+2. Fix bugs
+
+    **src/main/java/uk/co/informaticslab/Constants.java**
+
+    Fix hardcodded region ID to the standard S3 region:
+
+    Change
+    ```
+    public static final Regions MY_S3_DATA_REGION = Regions.EU_WEST_2;
+    ```
+    to
+    ```
+    public static final Regions MY_S3_DATA_REGION = Regions.US_EAST_1;
+    ```
+
+2. Configure
+
+    ```
+    catalog.xml - thredds catalog configuration. ???
+    threddsConfig.xml - thredds main configuration file.
+    docker-compose.yml - docker compose file to start thredds TDS with supplied configuration.
+    ```
+
+    **catalog.xml**
+
+    There is no documentation, no example about how to setup a S3 catalogue.
+
+    ```
+    https://<BUCKET>.s3-<REGION>.amazonaws.com/<PATH>
+    https://aims-ereefs-public-test.s3-ap-southeast-2.amazonaws.com/derived/ncaggregate/ereefs/gbr4_bgc_924/ongoing/all-one/gbr4_bgc_924-all-one.nc
+    ```
+
+    Modify go.sh
+
+    go.sh calls `ingest.py <S3 BUCKET ID> <S3 BUCKET ID> ...`
+    ```
+    /usr/bin/env python3 /usr/local/src/ingest.py mogreps-g mogreps-uk
+    ```
+    to
+    ```
+    /usr/bin/env python3 /usr/local/src/ingest.py aims-ereefs-public-test
+    ```
+
+    Copy resources/aims-ereefs-public-test.jinja to src/templates
+
+    **docker-compose.yml**
+
+    For development purpose, lets change the port to a free port.
+
+    Change:
+    ```
+    ports:
+      - '80:8080'    
+    ```
+    to
+    ```
+    ports:
+      - '8888:8080'    
+    ```
+
+    Mount files / directory to the docker image
+
+    Change:
+    ```
+    volumes:
+      - ./threddsConfig.xml:/usr/local/tomcat/content/thredds/threddsConfig.xml
+      - ./target/s3datasetsource-1.0-SNAPSHOT-jar-with-dependencies.jar:/usr/local/tomcat/webapps/thredds/WEB-INF/lib/s3datasetsource-1.0-SNAPSHOT-jar-with-dependencies.jar
+    ```
+    to
+    ```
+    volumes:
+      - ./threddsConfig.xml:/usr/local/tomcat/content/thredds/threddsConfig.xml
+      - ./target/s3datasetsource-1.0-SNAPSHOT-jar-with-dependencies.jar:/usr/local/tomcat/webapps/thredds/WEB-INF/lib/s3datasetsource-1.0-SNAPSHOT-jar-with-dependencies.jar
+      - ./catalog.xml:/usr/local/tomcat/content/thredds/catalog.xml
+      - ./s3:/usr/local/tomcat/content/thredds/s3
+    ```
+
+    **threddsConfig.xml**
+
+    Allow WMS service
+
+    Change
+    ```
+    <!--
+    <WMS>
+      <allow>false</allow>
+      <allowRemote>false</allowRemote>
+      <maxImageWidth>2048</maxImageWidth>
+      <maxImageHeight>2048</maxImageHeight>
+    </WMS>
+    -->
+    ```
+    to
+    ```
+    <WMS>
+      <allow>true</allow>
+      <allowRemote>true</allowRemote>
+      <maxImageWidth>2048</maxImageWidth>
+      <maxImageHeight>2048</maxImageHeight>
+    </WMS>
+    ```
+
+    TODO Set the Google analytics key
+    
+    Change:
+    ```
+    <htmlSetup>
+        <googleTrackingCode></googleTrackingCode>
+    </htmlSetup>
+    ```
+    to
+    ```
+    <htmlSetup>
+        <googleTrackingCode>   TODO   </googleTrackingCode>
+    </htmlSetup>
+    ```
+
+    **DockerFile**
+
+    THREDDS 4.6.10 uses the old Debian repository `jessie-backports`.
+    We need to use a more recent version to be able to compile it.
+
+    If you see this error:
+    ```
+    Err http://deb.debian.org jessie-backports/main amd64 Packages
+      404  Not Found
+    ```
+
+    Change:
+    ```
+    FROM unidata/thredds-docker:4.6.10
+    ```
+    to
+    ```
+    FROM unidata/thredds-docker:4.6.14
+    ```
+
+3. Create the docker container:
+
+    Clean up?
+    ```
+    $ docker container prune --force
+    $ docker image prune --force
+    ```
+
+    ```
+    $ cd s3datasetsource
+    $ docker-compose up
+    ```
+    
+    If you modify the configuration, you will have to force a new compile with:
+    ```
+    $ docker-compose up --force-recreate --build
+    ```
+
+4. Verify
+
+    You can connect to the Docker container to verify what was done.
+
+    Connect to the docker image
+    ```
+    $ docker ps
+    $ docker exec -it <DOCKER CONTAINER ID> bash
+    ```
+
+    Enable colours with ls and create "ll" alias
+    ```
+    # alias ls='ls --color'; alias ll='ls -l'
+    ```
+
+    Install packages for `ps` and `sudo`
+    ```
+    # apt-get update && apt-get install procps sudo
+    ```
+
+    Check generated files
+    ```
+    # vi /usr/local/tomcat/content/thredds/catalog.xml
+    # vi /usr/local/tomcat/content/thredds/threddsConfig.xml
+    ```
+
+    Disable vi Visual mode
+    ```
+    :set mouse-=a
+    ```
+
+
+5. Visit URL:
+
+    http://localhost:8888/thredds/catalogue.html
+
+NOTE: ingest.py generate the catalog.xml file. It is not generic. Needs to be re-written
+
+--------------------
+
+## Old stuff
+
+1. Download the THREDDS Docker image:
+
+    https://github.com/Unidata/thredds-docker
+
+    ```
+    $ docker run -d -p 8888:8080 unidata/thredds-docker
+    ```
+    Visit: http://localhost:8888/thredds/catalog.html
+
+    > Compile ?:
+    > ```
+    > $ git clone https://github.com/Unidata/thredds-docker.git
+    > $ cd thredds-docker
+    > $ docker-compose ???
+    > ```
+
+2. Download & compile the S3 plugin:
+    https://github.com/informatics-lab/s3datasetsource
+
+    ```
+    $ git clone https://github.com/informatics-lab/s3datasetsource.git
+    $ cd s3datasetsource
+    $ mvn clean package
+    ```
+
+3. Install the S3 plugin in THREDDS within the docker image
+
+    Connect to the docker image
+    ```
+    $ docker ps
+    $ docker cp s3datasetsource/target/s3datasetsource-1.0-SNAPSHOT-jar-with-dependencies.jar <DOCKER ID>:/usr/local/tomcat/webapps/thredds/WEB-INF/lib/s3datasetsource-1.0-SNAPSHOT-jar-with-dependencies.jar
+    $ docker exec -it <DOCKER CONTAINER ID> bash
+    # alias ls='ls --color'; alias ll='ls -l'
+    # apt-get update && apt-get install procps sudo
+    # vi /usr/local/tomcat/content/thredds/threddsConfig.xml
+    ```
+
+    Disable vi Visual mode
+    ```
+    :set mouse-=a
+    ```
+
+    ```
+    <threddsConfig>
+        ...
+        <!--
+        Add a DataSource - essentially an IOSP with access to Servlet request parameters
+        <datasetSource>my.package.DatsetSourceImpl</datasetSource>
+        -->
+        <datasetSource>uk.co.informaticslab.S3DatasetSource</datasetSource>
+        ...
+    </threddsConfig>
+    ```
+
+    https://stackoverflow.com/questions/22907231/copying-files-from-host-to-docker-container
+
+4. Configure the plugin
+
+    Add this to the Dockerfile to copy the catalog.xml file to THREDDS
+    ```
+    COPY catalog.xml /usr/local/tomcat/content/thredds/catalog.xml
+    ```
+
+5. Upload the docker image to AWS ECR
+
+6. Setup AWS ECS to spawn a THREDDS server with the ECR image when there is no server running (reliability)

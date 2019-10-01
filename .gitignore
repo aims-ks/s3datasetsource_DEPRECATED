@@ -1,7 +1,11 @@
-.idea
+# IntelliJ files
+.idea/
+*.iml
+# OpenJDK bug: https://bugs.openjdk.java.net/browse/JDK-8214300
+.attach_pid*
+
+# Maven files
+target/
+
+# Specific to this project
 aws.env
-target
-s3datasetsource.iml
-uk.co.informaticslab.*
-metrics
-**/*.iml

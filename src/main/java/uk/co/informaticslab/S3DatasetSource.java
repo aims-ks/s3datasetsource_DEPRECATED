@@ -1,10 +1,6 @@
 package uk.co.informaticslab;
 
-import com.amazonaws.ClientConfiguration;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.retry.PredefinedRetryPolicies;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.codahale.metrics.Counter;
 import com.codahale.metrics.Timer;
 import org.slf4j.Logger;
@@ -46,6 +42,7 @@ public class S3DatasetSource implements DatasetSource {
         s3DatasetSourceCounter.inc();
     }
 
+    @Override
     public boolean isMine(HttpServletRequest req) {
         String path = req.getPathInfo();
         boolean isMine = path.startsWith(PREFIX);
@@ -54,13 +51,18 @@ public class S3DatasetSource implements DatasetSource {
     }
 
     @Override
-    public NetcdfFile getNetcdfFile(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        String s3Url = createS3UrlFromPath(req.getPathInfo());
+    public NetcdfFile getNetcdfFile(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String s3Url = S3DatasetSource.createS3UrlFromPath(request.getPathInfo());
         LOG.debug("Accessing NetCDF file in S3 on url [{}]", s3Url);
 
         final Timer.Context rafContext = rafTimer.time();
         S3RandomAccessFile f = new S3RandomAccessFile(index, cache, client, s3Url);
         rafContext.stop();
+
+        // TODO
+        // If file not found:
+        // response.sendError(HttpServletResponse.SC_NOT_FOUND, message);
+        // return null;
 
         final Timer.Context ncContext = ncTimer.time();
         IOServiceProvider iosp = new H5iosp();
@@ -70,7 +72,7 @@ public class S3DatasetSource implements DatasetSource {
         return ncf;
     }
 
-    private String createS3UrlFromPath(String path) {
+    public static String createS3UrlFromPath(String path) {
         if (path.startsWith(PREFIX)) {
             path = path.substring(PREFIX.length());
         }

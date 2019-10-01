@@ -64,6 +64,14 @@
             <version>1.2.3</version>
         </dependency>
 
+        <!-- Used to define the S3FileServerController -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>4.3.20.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>com.palantir.docker.compose</groupId>
             <artifactId>docker-compose-rule-junit4</artifactId>
