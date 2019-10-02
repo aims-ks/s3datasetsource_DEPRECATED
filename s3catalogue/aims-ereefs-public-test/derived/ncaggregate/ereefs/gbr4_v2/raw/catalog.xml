@@ -6,6 +6,9 @@
          xsi:schemaLocation="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0 http://www.unidata.ucar.edu/schemas/thredds/InvCatalog.1.0.6.xsd">
 
     
-        <catalogRef xlink:title="ncaggregate" xlink:href="ncaggregate/catalog.xml" name=""/>
+        <catalogRef xlink:title="current" xlink:href="current/catalog.xml" name=""/>
+        <catalogRef xlink:title="salt" xlink:href="salt/catalog.xml" name=""/>
+        <catalogRef xlink:title="temp" xlink:href="temp/catalog.xml" name=""/>
+        <catalogRef xlink:title="wspeed" xlink:href="wspeed/catalog.xml" name=""/>
 
 </catalog>

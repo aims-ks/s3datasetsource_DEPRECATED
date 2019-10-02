@@ -21,7 +21,7 @@
     </service>
 
     <!-- Show all harvested S3 buckets -->
-    <catalogRef xlink:title="S3 catalogue" xlink:href="s3catalogue/catalog.xml" name=""/>
+    <catalogRef xlink:title="aims-ereefs-public-test" xlink:href="s3catalogue/aims-ereefs-public-test/catalog.xml" name=""/>
 
     <!-- Show only a branch of a S3 bucket -->
     <catalogRef xlink:title="GBR4 v2" xlink:href="s3catalogue/aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/ongoing/catalog.xml" name=""/>

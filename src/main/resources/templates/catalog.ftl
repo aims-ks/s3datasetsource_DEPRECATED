@@ -5,7 +5,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0 http://www.unidata.ucar.edu/schemas/thredds/InvCatalog.1.0.6.xsd">
 
-    
+    <#if datasets?size != 0>
+
         <service name="all" base="" serviceType="compound">
             <service name="odap" serviceType="OpenDAP" base="/thredds/dodsC/" />
             <service name="dap4" serviceType="DAP4" base="/thredds/dap4/" />
@@ -15,7 +16,13 @@
             <!--<service name="ncss" serviceType="NetcdfSubset" base="/thredds/ncss/" />-->
         </service>
 
-            <dataset name="gbr4_v2-all-one.nc" ID="gbr4_v2-all-one.nc" serviceName="all" urlPath="s3/aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/ongoing/all-one/gbr4_v2-all-one.nc" dataType="Grid" />
+        <#list datasets as dataset>
+            <dataset name="${dataset.name}" ID="${dataset.id}" serviceName="all" urlPath="${dataset.urlPath}" dataType="Grid" />
+        </#list>
+    </#if>
 
+    <#list catalogRefs as catalogRef>
+        <catalogRef xlink:title="${catalogRef.name}" xlink:href="${catalogRef.href}" name=""/>
+    </#list>
 
 </catalog>

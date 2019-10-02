@@ -15,7 +15,8 @@
             <!--<service name="ncss" serviceType="NetcdfSubset" base="/thredds/ncss/" />-->
         </service>
 
-            <dataset name="gbr4_v2-all-one.nc" ID="gbr4_v2-all-one.nc" serviceName="all" urlPath="s3/aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/ongoing/all-one/gbr4_v2-all-one.nc" dataType="Grid" />
+            <dataset name="gbr4_bgc_924-monthly-monthly-2014-12.nc" ID="gbr4_bgc_924-monthly-monthly-2014-12.nc" serviceName="all" urlPath="s3/aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_bgc_924/ongoing/monthly-monthly/gbr4_bgc_924-monthly-monthly-2014-12.nc" dataType="Grid" />
+            <dataset name="gbr4_bgc_924-monthly-monthly-2015-01.nc" ID="gbr4_bgc_924-monthly-monthly-2015-01.nc" serviceName="all" urlPath="s3/aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_bgc_924/ongoing/monthly-monthly/gbr4_bgc_924-monthly-monthly-2015-01.nc" dataType="Grid" />
 
 
 </catalog>
