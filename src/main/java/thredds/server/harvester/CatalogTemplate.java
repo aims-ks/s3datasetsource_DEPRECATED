@@ -27,7 +27,8 @@ public class CatalogTemplate {
     public CatalogTemplate() throws IOException {
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_29);
 
-        // Really ???
+        // This is used to do something similar to:
+        //   CatalogTemplate.class.getClassLoader().getResource("/templates");
         cfg.setClassForTemplateLoading(CatalogTemplate.class, "/templates");
 
         cfg.setDefaultEncoding("UTF-8");

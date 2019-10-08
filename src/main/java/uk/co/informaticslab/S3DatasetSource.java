@@ -1,10 +1,7 @@
 package uk.co.informaticslab;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.codahale.metrics.Counter;
-import com.codahale.metrics.Timer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import thredds.servlet.DatasetSource;
 import ucar.nc2.NetcdfFile;
 import ucar.nc2.NetcdfFileSubclass;
@@ -18,56 +15,49 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-import static com.codahale.metrics.MetricRegistry.name;
-
 /**
  * {@link DatasetSource} implementation to read directly from s3
  */
 public class S3DatasetSource implements DatasetSource {
-
-    private static final Logger LOG = LoggerFactory.getLogger(S3DatasetSource.class);
+    private static final Logger LOGGER = Logger.getLogger(S3DatasetSource.class);
 
     private static final String PREFIX = "/s3/";
-
-    private final Timer rafTimer = Constants.METRICS.timer(name(S3DatasetSource.class, "rafTimer"));
-    private final Timer ncTimer = Constants.METRICS.timer(name(S3DatasetSource.class, "ncTimer"));
-    private final Counter s3DatasetSourceCounter = Constants.METRICS.counter(name(S3DatasetSource.class, "s3DatasetSourceCounter"));
 
     private final AmazonS3 client = Constants.getS3Client();
 
     private Map<String, byte[]> cache = new HashMap<String, byte[]>();
     private LinkedList<String> index = new LinkedList<String>();
 
-    public S3DatasetSource() {
-        s3DatasetSourceCounter.inc();
-    }
-
     @Override
     public boolean isMine(HttpServletRequest req) {
         String path = req.getPathInfo();
         boolean isMine = path.startsWith(PREFIX);
-        LOG.debug("Path [{}] is mine [{}]", path, isMine);
+        LOGGER.debug(String.format("Path [%s] is mine [%b]", path, isMine));
         return isMine;
     }
 
     @Override
     public NetcdfFile getNetcdfFile(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String s3Url = S3DatasetSource.createS3UrlFromPath(request.getPathInfo());
-        LOG.debug("Accessing NetCDF file in S3 on url [{}]", s3Url);
+        LOGGER.debug(String.format("Accessing NetCDF file in S3 on url [%s]", s3Url));
 
-        final Timer.Context rafContext = rafTimer.time();
-        S3RandomAccessFile f = new S3RandomAccessFile(index, cache, client, s3Url);
-        rafContext.stop();
+        S3RandomAccessFile s3RandomAccessFile = new S3RandomAccessFile(this.index, this.cache, this.client, s3Url);
 
-        // TODO
         // If file not found:
-        // response.sendError(HttpServletResponse.SC_NOT_FOUND, message);
-        // return null;
+        if (!s3RandomAccessFile.exists()) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, String.format("S3 file not found: %s", s3Url));
+            return null;
+        }
 
-        final Timer.Context ncContext = ncTimer.time();
         IOServiceProvider iosp = new H5iosp();
-        NetcdfFile ncf = new NetcdfFileSubclass(iosp, f, null, null);
-        ncContext.stop();
+        NetcdfFile ncf = new NetcdfFileSubclass(iosp, s3RandomAccessFile, null, null) {
+            // Fix the getLastModified method, but that's a bit pointless
+            // since THREDDS don't even use it.
+            @Override
+            public long getLastModified() {
+                return s3RandomAccessFile.getLastModified();
+            }
+        };
 
         return ncf;
     }

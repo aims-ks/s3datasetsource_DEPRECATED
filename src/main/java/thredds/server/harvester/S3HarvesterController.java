@@ -5,12 +5,13 @@ import com.amazonaws.services.s3.model.ListObjectsV2Request;
 import com.amazonaws.services.s3.model.ListObjectsV2Result;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import freemarker.template.TemplateException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.co.informaticslab.ThreddsServerUtils;
 import uk.co.informaticslab.Constants;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -25,12 +26,12 @@ import java.util.TreeSet;
 /**
  * Generate THREDDS catalog.xml configuration for given S3 buckets
  *
- * handles /s3Harvester/*
+ * handles /s3harvester/*
  */
 @Controller
-@RequestMapping("/s3Harvester")
+@RequestMapping("/s3harvester")
 public class S3HarvesterController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(S3HarvesterController.class);
+    private static final Logger LOGGER = Logger.getLogger(S3HarvesterController.class);
 
     // Directory where catalog.xml files are generated
     private static final File S3_CATALOGUE_DIR = new File("/usr/local/tomcat/content/thredds/s3catalogue");
@@ -39,91 +40,56 @@ public class S3HarvesterController {
 
     @RequestMapping("**")
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        // TODO Security?
-        // http://localhost:8888/thredds/s3Harvester/potato/carrot
+        try {
+            // TODO Security?
+            // http://localhost:8888/thredds/s3harvester/
 
 
-        // TODO
-        // 1. Find the proper way to send an array of values (S3 Buckets) using REST API <=== Maybe I need a proper config file for that...
-        // 2. Extract the bucket names from the reqPath
-        // 3. Generate catalog.xml files for the given buckets (in "/tmp" maybe?)
-        // 4. Delete old catalog.xml files for the given buckets (and move temp config from "/tmp" to the config folder)
-        // 5. Reload THREDDS config (how??)
-        //     touch web.xml
-
-
-
-        // TODO put in config
-        String bucket = "aims-ereefs-public-test";
-        List<String> paths = new ArrayList<String>();
-        paths.add("derived/ncaggregate");
+            // TODO
+            // 1. Find the proper way to send an array of values (S3 Buckets) using REST API <=== Maybe I need a proper config file for that...
+            // 2. Extract the bucket names from the reqPath
+            // 3. Generate catalog.xml files for the given buckets (in "/tmp" maybe?)
+            // 4. Delete old catalog.xml files for the given buckets (and move temp config from "/tmp" to the config folder)
+            // 5. Reload THREDDS config (how??)
+            //     touch web.xml
 
 
 
-        if (paths.size() <= 0) {
-            paths.add(null);
-        }
-
-        if (!this.s3Client.doesBucketExist(bucket)) {
-            LOGGER.error(String.format("Bucket %s does not exist", bucket));
-            return;
-        }
-
-        Set<String> netCDFFilePaths = new TreeSet<String>();
-        for (String path : paths) {
-            netCDFFilePaths.addAll(this.getNetCDFFilePaths(bucket, path));
-        }
-
-        S3File netCDFFileTree = S3HarvesterController.parseFilePaths(bucket, netCDFFilePaths);
-        this.createCatalogs(netCDFFileTree);
+            // TODO put in config
+            String bucket = "aims-ereefs-public-test";
+            List<String> paths = new ArrayList<String>();
+            paths.add("derived/ncaggregate");
 
 
-        restartWebApp();
-    }
 
-    private void restartWebApp() {
-        // The refresh method is available in many classes, but it doesn't seem to be possible to get
-        //   the Application instance of those class.
-        // Some examples online create a new class, but that means the refresh in executed on an empty shell,
-        //   not on the running webapp.
-        // Some examples instanciate the class using the application XML config, which is not possible in
-        //   this case since this is a plugin. The configuration XML file in not defined here.
-        // Some people suggest to use the Tomcat Manager app, which we usually delete for security reason.
-        //   It can be called programmatically, but that's even worse than touching web.xml.
+            if (paths.size() <= 0) {
+                paths.add(null);
+            }
 
-        /*
-        AbstractRefreshableWebApplicationContext webContext = null;
-        webContext.refresh();
+            if (!this.s3Client.doesBucketExist(bucket)) {
+                LOGGER.error(String.format("Bucket %s does not exist", bucket));
+                return;
+            }
 
-        AbstractRefreshableApplicationContext context = null;
-        context.refresh();
+            Set<String> netCDFFilePaths = new TreeSet<String>();
+            for (String path : paths) {
+                netCDFFilePaths.addAll(this.getNetCDFFilePaths(bucket, path));
+            }
 
-        AbstractRefreshableConfigApplicationContext configContext = null;
-        configContext.refresh();
+            S3File netCDFFileTree = S3HarvesterController.parseFilePaths(bucket, netCDFFilePaths);
+            this.createCatalogs(netCDFFileTree);
 
-        AbstractApplicationContext c = null;
-        c.refresh();
+            // TODO Send a "Harvesting done" message as a response text
+            try (ServletOutputStream outputStream = response.getOutputStream()) {
+                outputStream.println("Harvesting done");
+                outputStream.flush();
+            }
 
-        AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
-        appContext.refresh();
-
-        ConfigurableApplicationContext cc = null;
-        cc.refresh();
-
-        ConfigurableWebApplicationContext ccc = null;
-        ccc.refresh();
-        */
-
-
-        // That works, but that's stupidly messy. It trigger a refresh withing the next 5 seconds
-        File webAppRoot = new File(System.getProperty("catalina.base"));
-        File webXml = new File(webAppRoot, "webapps/thredds/WEB-INF/web.xml");
-        if (webXml.exists()) {
-            // touch the file
-            LOGGER.warn(String.format("Restarting webapp: %s", webXml));
-            webXml.setLastModified(System.currentTimeMillis());
-        } else {
-            LOGGER.error(String.format("Can not restart the webapp. The web.xml file can not be found: %s", webXml));
+            ThreddsServerUtils.restart();
+        } catch(Exception ex) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, String.format("Exception occurred while harvesting the S3 buckets: %s", ex.getMessage()));
+            LOGGER.error("Exception occurred while harvesting the S3 buckets", ex);
+            throw ex;
         }
     }
 

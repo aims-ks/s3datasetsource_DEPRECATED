@@ -7,15 +7,13 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.retry.PredefinedRetryPolicies;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.codahale.metrics.MetricRegistry;
 
 public final class Constants {
-
-    public static final MetricRegistry METRICS = new MetricRegistry();
-
     public static final int MEGABYTE = 1024 * 1024;
 
     public static final Regions MY_S3_DATA_REGION = Regions.US_EAST_1;//Regions.EU_WEST_2;
+
+    private Constants () {}
 
     public static AmazonS3 getS3Client() {
         ClientConfiguration config = new ClientConfiguration();
@@ -28,8 +26,5 @@ public final class Constants {
             .withCredentials(new AWSStaticCredentialsProvider(new AnonymousAWSCredentials()))
             .withRegion(MY_S3_DATA_REGION)
             .withClientConfiguration(config).build();
-    }
-
-    private Constants () {
     }
 }

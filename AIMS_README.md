@@ -2,9 +2,8 @@
 
 ## TODO
 
-1. Delete content of templates and add out own template
-2. Delete python scripts
-3. Write S3HarvesterController to generate catalog.xml files on request (will be called by cron on Host)
+1. Secure the S3HarvesterController (will be called by cron on Host)
+2. Add support for `Size` and `Last Modified` in the catalogue
 
 ## Doc
 
@@ -12,13 +11,23 @@ Documentation about how to create an updated docker image for THREDDS with S3 su
 
 1. Download the S3 THREDDS plugin:
 
+    Original:
+
     https://github.com/informatics-lab/s3datasetsource
 
     ```
     $ git clone https://github.com/informatics-lab/s3datasetsource.git
     ```
 
-2. Fix bugs
+    AIMS fork:
+
+    https://github.com/aims-ks/s3datasetsource
+
+    ```
+    $ git clone https://github.com/aims-ks/s3datasetsource.git
+    ```
+
+2. Fix bugs (if cloning from original)
 
     **src/main/java/uk/co/informaticslab/Constants.java**
 
@@ -33,7 +42,7 @@ Documentation about how to create an updated docker image for THREDDS with S3 su
     public static final Regions MY_S3_DATA_REGION = Regions.US_EAST_1;
     ```
 
-2. Configure
+2. Configure (if cloning from original)
 
     ```
     catalog.xml - thredds catalog configuration. ???
@@ -155,7 +164,7 @@ Documentation about how to create an updated docker image for THREDDS with S3 su
     FROM unidata/thredds-docker:4.6.14
     ```
 
-3. Create the docker container:
+3. Create the docker container
 
     Clean up?
     ```
@@ -163,17 +172,25 @@ Documentation about how to create an updated docker image for THREDDS with S3 su
     $ docker image prune --force
     ```
 
+    Compile the plugin and create the docker container
+
     ```
     $ cd s3datasetsource
+    $ mvn clean package
     $ docker-compose up
     ```
+
+    **NOTE:** The maven command can be done within your IDE.
+    It can also be automatically done in the Docker container,
+    but Docker needs to download the dependencies every time, which adds
+    about 10 minutes to the deployment time. It's much quicker to do it locally.
     
     If you modify the configuration, you will have to force a new compile with:
     ```
     $ docker-compose up --force-recreate --build
     ```
 
-4. Verify
+4. Verify and connect to the running docker instance for debugging
 
     You can connect to the Docker container to verify what was done.
 
@@ -188,7 +205,7 @@ Documentation about how to create an updated docker image for THREDDS with S3 su
     # alias ls='ls --color'; alias ll='ls -l'
     ```
 
-    Install packages for `ps` and `sudo`
+    Install packages for `ps` and `sudo` (very useful for debugging)
     ```
     # apt-get update && apt-get install procps sudo
     ```
@@ -200,16 +217,42 @@ Documentation about how to create an updated docker image for THREDDS with S3 su
     ```
 
     Disable vi Visual mode
+
+    **NOTE:** The latest version of `vi` have `virtual mode` enabled by default.
+    That makes mouse selection and quick copy / paste impossible.
+    It might have some advantages, but I could not find any.
+    It's just an obnoxious feature in my opinion.
     ```
     :set mouse-=a
     ```
 
+    **NOTE:** You won't be able to copy paste this command because the `virtual mode`
+    is enable by default. You will have to manually type it.
+    Be careful with the syntax; there is a `-` (minus sign) before the `=` (equal sign).
+
 
 5. Visit URL:
 
-    http://localhost:8888/thredds/catalogue.html
+    http://localhost:8888/thredds/catalog.html
 
-NOTE: ingest.py generate the catalog.xml file. It is not generic. Needs to be re-written
+    **NOTE:** In the original project, `ingest.py` was used to generate the catalog.xml file.
+    THREDDS doesn't have support for generic. Needs to be re-written
+
+6. Harvest S3 bucket(s)
+
+    I have created a REST endpoint which automatically harvest the
+    S3 bucket(s) and restart THREDDS webapp.
+
+    http://localhost:8888/thredds/s3harvester
+
+    This endpoint should be periodically called by the cron.
+    
+    **NOTE:** It's currently a public API. It's susceptible to DDOS attack and should be protected.
+
+    Suggestion for protecting the endpoint:
+    - Restrict with username / password
+    - Restrict according to request provenance (only allow when called from localhost)
+    - Restrict frequency (only perform harvest if last harvest was performed more than X minutes ago)
 
 --------------------
 

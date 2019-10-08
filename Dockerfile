@@ -3,7 +3,7 @@ RUN mkdir /build
 COPY . /build
 WORKDIR /build
 # TODO Re-enable
-#RUN mvn clean package
+#RUN mvn -DskipTests=true clean package
 RUN ls /build/target/s3datasetsource-1.0-SNAPSHOT-jar-with-dependencies.jar
 # TODO Why?? Maybe that was supposed to be: RUN echo "done"
 CMD echo "done"

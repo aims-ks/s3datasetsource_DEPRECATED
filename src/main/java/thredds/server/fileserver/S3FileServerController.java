@@ -1,8 +1,7 @@
 package thredds.server.fileserver;
 
 import com.amazonaws.services.s3.AmazonS3;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.LastModified;
@@ -14,6 +13,7 @@ import uk.co.informaticslab.Constants;
 import uk.co.informaticslab.S3DatasetSource;
 import uk.co.informaticslab.S3RandomAccessFile;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
@@ -30,7 +30,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/s3FileServer")
 public class S3FileServerController implements LastModified {
-    private static final Logger LOGGER = LoggerFactory.getLogger(S3FileServerController.class);
+    private static final Logger LOGGER = Logger.getLogger(S3FileServerController.class);
 
     private final AmazonS3 s3Client = Constants.getS3Client();
 
@@ -166,7 +166,9 @@ public class S3FileServerController implements LastModified {
         //       response: don't catch (let bubble up out of doGet() etc)
         try {
 
-            IO.copyRafB(randomAccessFile, startPos, contentLength, response.getOutputStream(), new byte[60000]);
+            try (ServletOutputStream outputStream = response.getOutputStream()) {
+                IO.copyRafB(randomAccessFile, startPos, contentLength, outputStream, new byte[60000]);
+            }
 
             if (debugRequest) {
                 LOGGER.debug(String.format("returnFile(): returnFile ok = %s", filename));

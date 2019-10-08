@@ -5,9 +5,7 @@ import com.amazonaws.services.s3.AmazonS3URI;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.S3Object;
-import com.codahale.metrics.Counter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import ucar.unidata.io.RandomAccessFile;
 
 import java.io.IOException;
@@ -17,25 +15,19 @@ import java.nio.channels.WritableByteChannel;
 import java.util.LinkedList;
 import java.util.Map;
 
-import static com.codahale.metrics.MetricRegistry.name;
-
 /**
  * Provides random access to files in S3 via byte ranged requests.
  * <p>
  * originally written by @jamesmcclain
  */
 public class S3RandomAccessFile extends RandomAccessFile {
-
-    private static final Logger LOG = LoggerFactory.getLogger(S3RandomAccessFile.class);
-    private final Counter s3RandomAccessFileCounter = Constants.METRICS.counter(name(S3RandomAccessFile.class, "s3RandomAccessFileCounter"));
-    private final Counter read_Counter = Constants.METRICS.counter(name(S3RandomAccessFile.class, "read_Counter"));
-    private final Counter read__Counter = Constants.METRICS.counter(name(S3RandomAccessFile.class, "read__Counter"));
+    private static final Logger LOGGER = Logger.getLogger(S3RandomAccessFile.class);
 
     public static final int DEFAULT_S3_BUFFER_SIZE = Constants.MEGABYTE * 2;
     public static final int DEFAULT_MAX_CACHE_SIZE = Constants.MEGABYTE * 55;
 
     private final AmazonS3URI uri;
-    private final AmazonS3 client;
+    private final AmazonS3 s3Client;
     private final String bucket;
     private final String key;
     private final ObjectMetadata metadata;
@@ -46,17 +38,16 @@ public class S3RandomAccessFile extends RandomAccessFile {
     private Map<String, byte[]> cache;
     private LinkedList<String> index;
 
-    public S3RandomAccessFile(LinkedList index, Map cache, AmazonS3 client, String url) throws IOException {
+    public S3RandomAccessFile(LinkedList<String> index, Map<String, byte[]> cache, AmazonS3 client, String url) throws IOException {
         this(index, cache, client, url, DEFAULT_S3_BUFFER_SIZE);
     }
 
-    public S3RandomAccessFile(LinkedList index, Map cache, AmazonS3 client, String url, int bufferSize) throws IOException {
+    public S3RandomAccessFile(LinkedList<String> index, Map<String, byte[]> cache, AmazonS3 client, String url, int bufferSize) throws IOException {
         this(index, cache, client, url, bufferSize, DEFAULT_MAX_CACHE_SIZE);
     }
 
-    public S3RandomAccessFile(LinkedList index, Map cache, AmazonS3 client, String url, int bufferSize, int maxCacheSize) throws IOException {
+    public S3RandomAccessFile(LinkedList<String> index, Map<String, byte[]> cache, AmazonS3 client, String url, int bufferSize, int maxCacheSize) throws IOException {
         super(bufferSize);
-        s3RandomAccessFileCounter.inc();
         this.cache = cache;
         this.index = index;
         this.file = null;
@@ -71,44 +62,50 @@ public class S3RandomAccessFile extends RandomAccessFile {
             this.cacheBlockSize = this.maxCacheBlocks = -1;
         }
 
-        this.client = client;
+        this.s3Client = client;
         this.uri = new AmazonS3URI(url);
-        this.bucket = uri.getBucket();
-        this.key = uri.getKey();
-        this.metadata = client.getObjectMetadata(bucket, key); // does a head request on the data
+        this.bucket = this.uri.getBucket();
+        this.key = this.uri.getKey();
+        this.metadata = client.getObjectMetadata(this.bucket, this.key); // does a head request on the data
+    }
+
+    public boolean exists() {
+        if (this.bucket == null || this.key == null || this.s3Client == null) {
+            return false;
+        }
+
+        return this.s3Client.doesObjectExist(this.bucket, this.key);
     }
 
     public void close() throws IOException {
-//        cache.clear();
-//        index.clear();
+        this.cache.clear();
+        this.index.clear();
     }
 
     /**
      * After execution of this function, the given block is guranteed to
      * be in the cache.
      */
-    private void ensure(Long key) throws IOException {
-        if (!cache.containsKey(getCacheKey(key))) {
-            long position = key.longValue() * cacheBlockSize;
-            long toEOF = (length() - position);
-            long bytes = toEOF < cacheBlockSize ? toEOF : cacheBlockSize;
+    private void ensure(long key) throws IOException {
+        if (!this.cache.containsKey(this.getCacheKey(key))) {
+            long position = key * this.cacheBlockSize;
+            long toEOF = (this.length() - position);
+            long bytes = toEOF < this.cacheBlockSize ? toEOF : this.cacheBlockSize;
             byte[] buffer = new byte[(int) bytes];
 
-            read__(position, buffer, 0, cacheBlockSize);
-            cache.put(getCacheKey(key), buffer);
-            index.add(getCacheKey(key));
-            assert (cache.size() == index.size());
-            while (cache.size() > maxCacheBlocks) {
-                String id = index.removeFirst();
-                cache.remove(id);
+            this.read__(position, buffer, 0, this.cacheBlockSize);
+            this.cache.put(this.getCacheKey(key), buffer);
+            this.index.add(this.getCacheKey(key));
+            assert (this.cache.size() == this.index.size());
+            while (this.cache.size() > this.maxCacheBlocks) {
+                String id = this.index.removeFirst();
+                this.cache.remove(id);
             }
-
-            return;
         }
     }
 
-    private String getCacheKey(Long oldKey) {
-        return key + oldKey;
+    private String getCacheKey(long oldKey) {
+        return this.key + oldKey;
     }
 
     /**
@@ -126,31 +123,29 @@ public class S3RandomAccessFile extends RandomAccessFile {
      */
     @Override
     protected int read_(long pos, byte[] buff, int offset, int len) throws IOException {
-        read_Counter.inc();
-
-        if (!(cacheBlockSize > 0) || !(maxCacheBlocks > 0)) {
-            return read__(pos, buff, offset, len);
+        if (!(this.cacheBlockSize > 0) || !(this.maxCacheBlocks > 0)) {
+            return this.read__(pos, buff, offset, len);
         }
 
-        long start = pos / cacheBlockSize;
-        long end = (pos + len - 1) / cacheBlockSize;
+        long start = pos / this.cacheBlockSize;
+        long end = (pos + len - 1) / this.cacheBlockSize;
 
-        if (pos >= length()) { // Do not read past end of the file
+        if (pos >= this.length()) { // Do not read past end of the file
             return 0;
         } else if (end - start > 1) { // If the request touches more than two cache blocks, punt (should never happen)
-            return read__(pos, buff, offset, len);
+            return this.read__(pos, buff, offset, len);
         } else if (end - start == 1) { // If the request touches two cache blocks, split it
-            int length1 = (int) ((end * cacheBlockSize) - pos);
-            int length2 = (int) ((pos + len) - (end * cacheBlockSize));
-            return read_(pos, buff, offset, length1) + read_(pos + length1, buff, offset + length1, length2);
+            int length1 = (int) ((end * this.cacheBlockSize) - pos);
+            int length2 = (int) ((pos + len) - (end * this.cacheBlockSize));
+            return this.read_(pos, buff, offset, length1) + this.read_(pos + length1, buff, offset + length1, length2);
         }
 
         // Service a request that touches only one cache block
-        Long key = new Long(start);
-        ensure(key);
+        long key = start;
+        this.ensure(key);
 
-        byte[] src = (byte[]) cache.get(getCacheKey(key));
-        int srcPos = (int) (pos - (key.longValue() * cacheBlockSize));
+        byte[] src = this.cache.get(this.getCacheKey(key));
+        int srcPos = (int) (pos - (key * this.cacheBlockSize));
         int toEOB = src.length - srcPos;
         int length = toEOB < len ? toEOB : len;
         System.arraycopy(src, srcPos, buff, offset, length);
@@ -159,11 +154,10 @@ public class S3RandomAccessFile extends RandomAccessFile {
     }
 
     private int read__(long pos, byte[] buff, int offset, int len) throws IOException {
-        read__Counter.inc();
-        GetObjectRequest rangeObjectRequest = new GetObjectRequest(bucket, key);
+        GetObjectRequest rangeObjectRequest = new GetObjectRequest(this.bucket, this.key);
         rangeObjectRequest.setRange(pos, pos + len - 1);
 
-        S3Object objectPortion = client.getObject(rangeObjectRequest);
+        S3Object objectPortion = this.s3Client.getObject(rangeObjectRequest);
         InputStream objectData = objectPortion.getObjectContent();
         int bytes = 0;
         int totalBytes = 0;
@@ -182,22 +176,22 @@ public class S3RandomAccessFile extends RandomAccessFile {
 
     @Override
     public long readToByteChannel(WritableByteChannel dest, long offset, long nbytes) throws IOException {
-        LOG.debug("reading {} bytes from offset {} to byte channel", nbytes, offset);
+        LOGGER.debug(String.format("reading %d bytes from offset %d to byte channel", nbytes, offset));
 
         int n = (int) nbytes;
         byte[] buff = new byte[n];
-        int done = read_(offset, buff, 0, n);
+        int done = this.read_(offset, buff, 0, n);
         dest.write(ByteBuffer.wrap(buff));
         return done;
     }
 
     @Override
     public long length() throws IOException {
-        return metadata.getContentLength();
+        return this.metadata.getContentLength();
     }
 
     @Override
     public long getLastModified() {
-        return metadata.getLastModified().getTime();
+        return this.metadata.getLastModified().getTime();
     }
 }
