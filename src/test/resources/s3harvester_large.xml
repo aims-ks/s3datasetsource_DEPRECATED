@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s3HarvesterConfig>
+
+    <catalogueDirectory>/usr/local/tomcat/content/thredds/s3catalogue</catalogueDirectory>
+
+    <buckets>
+        <bucket name="aims-ereefs-public-test">
+            <paths>
+                <path>derived/ncaggregate</path>
+            </paths>
+        </bucket>
+
+        <bucket name="aims-ereefs-private-test">
+            <paths>
+                <path>ongoing/ncaggregate</path>
+                <path>ongoing/ncanimate</path>
+            </paths>
+        </bucket>
+
+        <bucket name="aims-ereefs" />
+    </buckets>
+
+</s3HarvesterConfig>
