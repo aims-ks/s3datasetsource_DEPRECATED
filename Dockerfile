@@ -15,7 +15,7 @@ RUN pip3 install boto3 jinja2
 COPY ingest.py /usr/local/src/ingest.py
 COPY threddsConfig.xml /usr/local/tomcat/content/thredds/threddsConfig.xml
 COPY catalog.xml /usr/local/tomcat/content/thredds/catalog.xml
-COPY ./src/templates/ /usr/local/src/templates/
+COPY s3harvester.xml /usr/local/tomcat/content/thredds/s3harvester.xml
 COPY go.sh /go.sh
 COPY --from=0 /build/target/s3datasetsource-1.0-SNAPSHOT-jar-with-dependencies.jar /usr/local/tomcat/webapps/thredds/WEB-INF/lib/s3datasetsource-1.0-SNAPSHOT-jar-with-dependencies.jar
 ENTRYPOINT [""]

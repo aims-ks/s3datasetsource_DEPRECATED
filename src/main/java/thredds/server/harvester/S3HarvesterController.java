@@ -34,66 +34,75 @@ public class S3HarvesterController {
     private static final Logger LOGGER = Logger.getLogger(S3HarvesterController.class);
 
     private static final File CONFIG_ROOT_DIR = new File("/usr/local/tomcat/content/thredds");
-    // Directory where the S3 "catalog.xml" files are generated
-    private static final File S3_CATALOGUE_DIR = new File(CONFIG_ROOT_DIR, "s3catalogue");
+    private static final File S3_HARVESTER_CONFIG_FILE = new File(CONFIG_ROOT_DIR, "s3harvester.xml");
 
     private final AmazonS3 s3Client = Constants.getS3Client();
 
+    private S3HarvesterConfiguration config;
+
     public S3HarvesterController() {
-        // TODO Load config
+        this.config = new S3HarvesterConfiguration(S3_HARVESTER_CONFIG_FILE);
+        try {
+            this.config.init();
+        } catch (Throwable ex) {
+            LOGGER.error(String.format("Exception occurred while parsing the S3 harvester configuration file: %s", S3_HARVESTER_CONFIG_FILE), ex);
+            this.config = null;
+        }
     }
 
     @RequestMapping("**")
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        try {
-            // TODO Security?
-            // http://localhost:8888/thredds/s3harvester/
+        if (this.config == null) {
+            LOGGER.warn("The S3 harvesting was not configured");
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "The S3 harvesting was not configured");
+
+        } else {
+
+            try {
+                // TODO Security?
+                // http://localhost:8888/thredds/s3harvester/
 
 
-            // TODO
-            // 1. Find the proper way to send an array of values (S3 Buckets) using REST API <=== Maybe I need a proper config file for that...
-            // 2. Extract the bucket names from the reqPath
-            // 3. Generate catalog.xml files for the given buckets (in "/tmp" maybe?)
-            // 4. Delete old catalog.xml files for the given buckets (and move temp config from "/tmp" to the config folder)
-            // 5. Reload THREDDS config
+                // TODO
+                // Generate in temp dir, to prevent breaking the system AND allow removal of S3 files
 
+                for (S3HarvesterConfiguration.S3HarvesterBucketConfiguration bucketConfig : this.config.getBucketConfigurations()) {
+                    String bucket = bucketConfig.getBucket();
+                    List<String> paths = bucketConfig.getPaths();
 
+                    // If the bucket is configured with no path, add a "null" path,
+                    // to indicate that we want to harvest the whole bucket
+                    if (paths == null || paths.size() <= 0) {
+                        paths = new ArrayList<String>();
+                        paths.add(null);
+                    }
 
-            // TODO put in config
-            String bucket = "aims-ereefs-public-test";
-            List<String> paths = new ArrayList<String>();
-            paths.add("derived/ncaggregate");
+                    if (!this.s3Client.doesBucketExist(bucket)) {
+                        LOGGER.error(String.format("Bucket %s does not exist", bucket));
+                        return;
+                    }
 
+                    Set<String> netCDFFilePaths = new TreeSet<String>();
+                    for (String path : paths) {
+                        netCDFFilePaths.addAll(this.getNetCDFFilePaths(bucket, path));
+                    }
 
+                    S3File netCDFFileTree = S3HarvesterController.parseFilePaths(bucket, netCDFFilePaths);
+                    this.createCatalogs(netCDFFileTree);
+                }
 
-            if (paths.size() <= 0) {
-                paths.add(null);
+                ThreddsServerUtils.reloadCatalogue();
+
+                // Send a "Harvesting done" message as a response text
+                try (ServletOutputStream outputStream = response.getOutputStream()) {
+                    outputStream.println("Harvesting done");
+                    outputStream.flush();
+                }
+            } catch (Exception ex) {
+                LOGGER.error("Exception occurred while harvesting the S3 buckets", ex);
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, String.format("Exception occurred while harvesting the S3 buckets: %s", ex.getMessage()));
+                throw ex;
             }
-
-            if (!this.s3Client.doesBucketExist(bucket)) {
-                LOGGER.error(String.format("Bucket %s does not exist", bucket));
-                return;
-            }
-
-            Set<String> netCDFFilePaths = new TreeSet<String>();
-            for (String path : paths) {
-                netCDFFilePaths.addAll(this.getNetCDFFilePaths(bucket, path));
-            }
-
-            S3File netCDFFileTree = S3HarvesterController.parseFilePaths(bucket, netCDFFilePaths);
-            this.createCatalogs(netCDFFileTree);
-
-            ThreddsServerUtils.reloadCatalogue();
-
-            // Send a "Harvesting done" message as a response text
-            try (ServletOutputStream outputStream = response.getOutputStream()) {
-                outputStream.println("Harvesting done");
-                outputStream.flush();
-            }
-        } catch (Exception ex) {
-            LOGGER.error("Exception occurred while harvesting the S3 buckets", ex);
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, String.format("Exception occurred while harvesting the S3 buckets: %s", ex.getMessage()));
-            throw ex;
         }
     }
 
@@ -102,7 +111,7 @@ public class S3HarvesterController {
             return null;
         }
 
-        File catalogDir = new File(S3_CATALOGUE_DIR, netCDFFile.path);
+        File catalogDir = new File(this.config.getS3CatalogueDirectory(), netCDFFile.path);
         File catalogFile = new File(catalogDir, "catalog.xml");
 
         try {
