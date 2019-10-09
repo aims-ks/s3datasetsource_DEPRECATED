@@ -3,8 +3,6 @@ version: '2'
 services:
  thredds:
     build: .
-    environment:
-      - PYTHONUNBUFFERED=1
     ports:
       - '8888:8080'
     container_name: thredds
@@ -12,4 +10,5 @@ services:
       - ./threddsConfig.xml:/usr/local/tomcat/content/thredds/threddsConfig.xml
       - ./target/s3datasetsource-1.0-SNAPSHOT-jar-with-dependencies.jar:/usr/local/tomcat/webapps/thredds/WEB-INF/lib/s3datasetsource-1.0-SNAPSHOT-jar-with-dependencies.jar
       - ./catalog.xml:/usr/local/tomcat/content/thredds/catalog.xml
+      - ./s3harvester.xml:/usr/local/tomcat/content/thredds/s3harvester.xml
       - ./s3catalogue:/usr/local/tomcat/content/thredds/s3catalogue

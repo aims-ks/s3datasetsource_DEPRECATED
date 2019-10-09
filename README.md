@@ -9,12 +9,16 @@ Follow the documentation on the [thredds DatasetSource plugin page][2].
 `threddsConfig.xml` - thredds  main configuration file.  
 `docker-compose.yml` - docker compose file to start thredds TDS with supplied configuration.  
 
+### `catalog.xml`
+
+### `threddsConfig.xml`
+
+### `docker-compose.yml`
+
 ## Building
-`$ mvn install` - build the plugin.  
+`$ mvn package` - build the plugin.  
 Built artifact can be found in the target directory:  
 `<project root>/target/s3datasetsource-1.0-SNAPSHOT-jar-with-dependencies.jar`
-
-Note that there is no need to build this project if you are using the Docker image.
 
 ## Running
 Store your AWS credentials in a file called `aws.env` in the root directory. You have to have a (free) AWS account to access this data.

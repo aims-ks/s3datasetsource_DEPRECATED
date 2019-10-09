@@ -57,6 +57,7 @@ public class S3HarvesterConfiguration {
         }
     }
 
+
     private void parseCatalogueDirectory(Document doc) throws Exception {
         NodeList catalogueDirectoryNodes = doc.getElementsByTagName("catalogueDirectory");
         int nbCatalogueDirectoryNodes = catalogueDirectoryNodes == null ? 0 : catalogueDirectoryNodes.getLength();
@@ -130,6 +131,7 @@ public class S3HarvesterConfiguration {
     private String parseBucketPath(Element bucketPathElement) throws Exception {
         return bucketPathElement.getTextContent();
     }
+
 
     public File getConfigFile() {
         return this.configFile;
