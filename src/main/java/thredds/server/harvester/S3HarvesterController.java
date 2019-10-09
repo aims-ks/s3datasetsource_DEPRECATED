@@ -33,10 +33,15 @@ import java.util.TreeSet;
 public class S3HarvesterController {
     private static final Logger LOGGER = Logger.getLogger(S3HarvesterController.class);
 
-    // Directory where catalog.xml files are generated
-    private static final File S3_CATALOGUE_DIR = new File("/usr/local/tomcat/content/thredds/s3catalogue");
+    private static final File CONFIG_ROOT_DIR = new File("/usr/local/tomcat/content/thredds");
+    // Directory where the S3 "catalog.xml" files are generated
+    private static final File S3_CATALOGUE_DIR = new File(CONFIG_ROOT_DIR, "s3catalogue");
 
     private final AmazonS3 s3Client = Constants.getS3Client();
+
+    public S3HarvesterController() {
+        // TODO Load config
+    }
 
     @RequestMapping("**")
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -50,8 +55,7 @@ public class S3HarvesterController {
             // 2. Extract the bucket names from the reqPath
             // 3. Generate catalog.xml files for the given buckets (in "/tmp" maybe?)
             // 4. Delete old catalog.xml files for the given buckets (and move temp config from "/tmp" to the config folder)
-            // 5. Reload THREDDS config (how??)
-            //     touch web.xml
+            // 5. Reload THREDDS config
 
 
 
@@ -79,23 +83,23 @@ public class S3HarvesterController {
             S3File netCDFFileTree = S3HarvesterController.parseFilePaths(bucket, netCDFFilePaths);
             this.createCatalogs(netCDFFileTree);
 
-            // TODO Send a "Harvesting done" message as a response text
+            ThreddsServerUtils.reloadCatalogue();
+
+            // Send a "Harvesting done" message as a response text
             try (ServletOutputStream outputStream = response.getOutputStream()) {
                 outputStream.println("Harvesting done");
                 outputStream.flush();
             }
-
-            ThreddsServerUtils.restart();
-        } catch(Exception ex) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, String.format("Exception occurred while harvesting the S3 buckets: %s", ex.getMessage()));
+        } catch (Exception ex) {
             LOGGER.error("Exception occurred while harvesting the S3 buckets", ex);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, String.format("Exception occurred while harvesting the S3 buckets: %s", ex.getMessage()));
             throw ex;
         }
     }
 
-    private void createCatalogs(S3File netCDFFile) throws IOException, TemplateException {
+    private File createCatalogs(S3File netCDFFile) throws IOException, TemplateException {
         if (netCDFFile == null || !netCDFFile.isDirectory()) {
-            return;
+            return null;
         }
 
         File catalogDir = new File(S3_CATALOGUE_DIR, netCDFFile.path);
@@ -125,6 +129,8 @@ public class S3HarvesterController {
             LOGGER.error(String.format("Error occurred while generating the catalogue: %s", catalogFile), ex);
             throw ex;
         }
+
+        return catalogFile;
     }
 
     private Set<String> getNetCDFFilePaths(String bucket, String path) {
