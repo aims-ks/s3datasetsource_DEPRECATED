@@ -93,9 +93,6 @@ public class S3FileServerController implements LastModified {
     }
 
     private S3RandomAccessFile getS3RandomAccessFile(String reqPath) throws IOException {
-        if (!reqPath.startsWith("/")) {
-            reqPath = "/" + reqPath;
-        }
         String s3Url = S3DatasetSource.createS3UrlFromPath(reqPath);
 
         if (s3Url == null || s3Url.isEmpty()) {

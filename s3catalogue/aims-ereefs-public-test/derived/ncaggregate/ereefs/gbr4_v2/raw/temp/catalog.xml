@@ -12,8 +12,8 @@
             <service name="wms" serviceType="WMS" base="/thredds/wms/" />
         </service>
 
-            <dataset name="gbr4_v2-raw-temp-2010-09.nc" ID="gbr4_v2-raw-temp-2010-09.nc" serviceName="all" urlPath="s3/aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/temp/gbr4_v2-raw-temp-2010-09.nc" dataType="Grid" />
-            <dataset name="gbr4_v2-raw-temp-2010-10.nc" ID="gbr4_v2-raw-temp-2010-10.nc" serviceName="all" urlPath="s3/aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/temp/gbr4_v2-raw-temp-2010-10.nc" dataType="Grid" />
+            <dataset name="gbr4_v2-raw-temp-2010-09.nc" ID="gbr4_v2-raw-temp-2010-09.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/temp/gbr4_v2-raw-temp-2010-09.nc" dataType="Grid" />
+            <dataset name="gbr4_v2-raw-temp-2010-10.nc" ID="gbr4_v2-raw-temp-2010-10.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/temp/gbr4_v2-raw-temp-2010-10.nc" dataType="Grid" />
 
 
 </catalog>

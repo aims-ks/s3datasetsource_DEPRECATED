@@ -12,7 +12,7 @@
             <service name="wms" serviceType="WMS" base="/thredds/wms/" />
         </service>
 
-            <dataset name="gbr4_bgc_924-all-one.nc" ID="gbr4_bgc_924-all-one.nc" serviceName="all" urlPath="s3/aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_bgc_924/ongoing/all-one/gbr4_bgc_924-all-one.nc" dataType="Grid" />
+            <dataset name="gbr4_bgc_924-all-one.nc" ID="gbr4_bgc_924-all-one.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_bgc_924/ongoing/all-one/gbr4_bgc_924-all-one.nc" dataType="Grid" />
 
 
 </catalog>

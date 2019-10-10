@@ -12,7 +12,7 @@
             <service name="wms" serviceType="WMS" base="/thredds/wms/" />
         </service>
 
-            <dataset name="gbr4_v2-annual-annual-2010.nc" ID="gbr4_v2-annual-annual-2010.nc" serviceName="all" urlPath="s3/aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/ongoing/annual-annual/gbr4_v2-annual-annual-2010.nc" dataType="Grid" />
+            <dataset name="gbr4_v2-annual-annual-2010.nc" ID="gbr4_v2-annual-annual-2010.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/ongoing/annual-annual/gbr4_v2-annual-annual-2010.nc" dataType="Grid" />
 
 
 </catalog>

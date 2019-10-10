@@ -33,6 +33,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import thredds.servlet.DataRootHandler;
 import uk.co.informaticslab.Constants;
+import uk.co.informaticslab.S3DatasetSource;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -194,7 +195,7 @@ public class S3HarvesterController implements ApplicationContextAware {
                     catalogTemplate.addDataset(
                             child.getFilename(),
                             child.getFilename(),
-                            "s3/" + child.getPath());
+                            S3DatasetSource.S3_PREFIX + child.getPath());
                 }
             }
 

@@ -21,7 +21,16 @@ import java.util.Map;
 public class S3DatasetSource implements DatasetSource {
     private static final Logger LOGGER = Logger.getLogger(S3DatasetSource.class);
 
-    private static final String PREFIX = "/s3/";
+    // Prefix for S3 URLs
+    public static final String S3_PREFIX = "s3://";
+
+    // THREDDS tends to break S3 URLs.
+    //   S3 URL:
+    //     s3://bucket/file.nc
+    //   THREDDS path (depending on context):
+    //     /s3:/bucket/file.nc
+    //     s3:/bucket/file.nc
+    private static final String BROKEN_PATH_PREFIX = "s3:/";
 
     private final AmazonS3 client = Constants.getS3Client();
 
@@ -31,7 +40,7 @@ public class S3DatasetSource implements DatasetSource {
     @Override
     public boolean isMine(HttpServletRequest req) {
         String path = req.getPathInfo();
-        boolean isMine = path.startsWith(PREFIX);
+        boolean isMine = S3DatasetSource.isS3Path(path);
         LOGGER.debug(String.format("Path [%s] is mine [%b]", path, isMine));
         return isMine;
     }
@@ -62,14 +71,34 @@ public class S3DatasetSource implements DatasetSource {
         return ncf;
     }
 
+    public static boolean isS3Path(String path) {
+        // Remove "/" at the beginning
+        while (path.startsWith("/")) {
+            path = path.substring(1);
+        }
+
+        return path.startsWith(S3_PREFIX) ||
+                path.startsWith(BROKEN_PATH_PREFIX);
+    }
+
     public static String createS3UrlFromPath(String path) {
-        if (path.startsWith(PREFIX)) {
-            path = path.substring(PREFIX.length());
+        // Remove "/" at the beginning
+        while (path.startsWith("/")) {
+            path = path.substring(1);
         }
+
+        // Fix S3 URL
+        if (S3DatasetSource.isS3Path(path) && !path.startsWith(S3_PREFIX)) {
+            if (path.startsWith(BROKEN_PATH_PREFIX)) {
+                path = path.substring(BROKEN_PATH_PREFIX.length());
+            }
+            path = S3_PREFIX + path;
+        }
+
+        // Remove ".html" (or anything else) following the ".nc"
         if (!path.endsWith(".nc")) {
-            path = path.substring(0, path.indexOf(".nc") + 3);
+            path = path.substring(0, path.lastIndexOf(".nc") + 3);
         }
-        String s3Url = "s3://" + path;
-        return s3Url;
+        return path;
     }
 }
