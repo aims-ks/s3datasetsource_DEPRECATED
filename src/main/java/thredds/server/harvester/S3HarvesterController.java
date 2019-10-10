@@ -109,18 +109,21 @@ public class S3HarvesterController implements ApplicationContextAware {
                         paths.add(null);
                     }
 
-                    if (!this.s3Client.doesBucketExist(bucket)) {
-                        LOGGER.error(String.format("Bucket %s does not exist", bucket));
-                        return;
-                    }
+                    try {
+                        if (!this.s3Client.doesBucketExist(bucket)) {
+                            LOGGER.error(String.format("Bucket %s does not exist", bucket));
+                        } else {
+                            Set<String> netCDFFilePaths = new TreeSet<String>();
+                            for (String path : paths) {
+                                netCDFFilePaths.addAll(this.getNetCDFFilePaths(bucket, path));
+                            }
 
-                    Set<String> netCDFFilePaths = new TreeSet<String>();
-                    for (String path : paths) {
-                        netCDFFilePaths.addAll(this.getNetCDFFilePaths(bucket, path));
+                            S3File netCDFFileTree = S3HarvesterController.parseFilePaths(bucket, netCDFFilePaths);
+                            this.createCatalogs(temporaryConfigDirectory, netCDFFileTree);
+                        }
+                    } catch (Exception ex) {
+                        LOGGER.error(String.format("Exception occurred while harvesting the S3 bucket: %s", bucket), ex);
                     }
-
-                    S3File netCDFFileTree = S3HarvesterController.parseFilePaths(bucket, netCDFFilePaths);
-                    this.createCatalogs(temporaryConfigDirectory, netCDFFileTree);
                 }
 
                 // Try to empty current THREDDS catalogue configuration

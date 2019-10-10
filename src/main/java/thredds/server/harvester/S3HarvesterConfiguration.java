@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class S3HarvesterConfiguration {
+    private static final File DEFAULT_S3_CATALOGUE_DIRECTORY = new File("/usr/local/tomcat/content/thredds/s3catalogue");
+
     private File configFile;
 
     // Directory where the S3 "catalog.xml" files are generated
@@ -47,7 +49,7 @@ public class S3HarvesterConfiguration {
 
     public void init() throws Exception {
         this.bucketConfigs = new ArrayList<S3HarvesterBucketConfiguration>();
-        this.s3CatalogueDirectory = null;
+        this.s3CatalogueDirectory = DEFAULT_S3_CATALOGUE_DIRECTORY;
 
         if (this.configFile == null) {
             throw new Exception("Invalid S3Harvester configuration file. The configuration file is null.");
@@ -79,18 +81,17 @@ public class S3HarvesterConfiguration {
     private void parseCatalogueDirectory(Document doc) throws Exception {
         NodeList catalogueDirectoryNodes = doc.getElementsByTagName("catalogueDirectory");
         int nbCatalogueDirectoryNodes = catalogueDirectoryNodes == null ? 0 : catalogueDirectoryNodes.getLength();
-        if (catalogueDirectoryNodes == null || nbCatalogueDirectoryNodes <= 0) {
-            throw new Exception(String.format("Invalid S3Harvester configuration file: %s. Missing element \"s3HarvesterConfig.catalogueDirectory\".", this.configFile));
-        }
-        if (nbCatalogueDirectoryNodes > 1) {
-            throw new Exception(String.format("Invalid S3Harvester configuration file: %s. More than one \"s3HarvesterConfig.catalogueDirectory\" element found.", this.configFile));
-        }
+        if (catalogueDirectoryNodes != null && nbCatalogueDirectoryNodes > 0) {
+            if (nbCatalogueDirectoryNodes > 1) {
+                throw new Exception(String.format("Invalid S3Harvester configuration file: %s. More than one \"s3HarvesterConfig.catalogueDirectory\" element found.", this.configFile));
+            }
 
-        String s3CatalogueDirectoryStr = catalogueDirectoryNodes.item(0).getTextContent();
-        if (s3CatalogueDirectoryStr == null || s3CatalogueDirectoryStr.isEmpty()) {
-            throw new Exception(String.format("Invalid S3Harvester configuration file: %s. Element \"s3HarvesterConfig.catalogueDirectory\" contains no value.", this.configFile));
+            String s3CatalogueDirectoryStr = catalogueDirectoryNodes.item(0).getTextContent();
+            if (s3CatalogueDirectoryStr == null || s3CatalogueDirectoryStr.isEmpty()) {
+                throw new Exception(String.format("Invalid S3Harvester configuration file: %s. Element \"s3HarvesterConfig.catalogueDirectory\" contains no value.", this.configFile));
+            }
+            this.s3CatalogueDirectory = new File(s3CatalogueDirectoryStr);
         }
-        this.s3CatalogueDirectory = new File(s3CatalogueDirectoryStr);
     }
 
     private void parseBuckets(Document doc) throws Exception {
