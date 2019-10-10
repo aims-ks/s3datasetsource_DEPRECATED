@@ -5,8 +5,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0 http://www.unidata.ucar.edu/schemas/thredds/InvCatalog.1.0.6.xsd">
 
-    
-        <catalogRef xlink:title="gbr4_bgc_924" xlink:href="gbr4_bgc_924/catalog.xml" name=""/>
-        <catalogRef xlink:title="gbr4_v2" xlink:href="gbr4_v2/catalog.xml" name=""/>
+
+        <catalogRef name="gbr4_bgc_924" xlink:href="gbr4_bgc_924/catalog.xml" />
+        <catalogRef name="gbr4_v2" xlink:href="gbr4_v2/catalog.xml" />
 
 </catalog>

@@ -3,27 +3,12 @@
          xmlns="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0"
          xmlns:xlink="http://www.w3.org/1999/xlink"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0
-           http://www.unidata.ucar.edu/schemas/thredds/InvCatalog.1.0.6.xsd">
-
-    <service name="all" base="" serviceType="compound">
-        <service name="odap" serviceType="OpenDAP" base="/thredds/dodsC/" />
-        <service name="dap4" serviceType="DAP4" base="/thredds/dap4/" />
-        <service name="http" serviceType="HTTPServer" base="/thredds/fileServer/" />
-        <service name="wcs" serviceType="WCS" base="/thredds/wcs/" />
-        <service name="wms" serviceType="WMS" base="/thredds/wms/" />
-        <service name="ncss" serviceType="NetcdfSubset" base="/thredds/ncss/" />
-    </service>
-
-    <service name="dap" base="" serviceType="compound">
-        <service name="odap" serviceType="OpenDAP" base="/thredds/dodsC/"/>
-        <service name="dap4" serviceType="DAP4" base="/thredds/dap4/"/>
-    </service>
+         xsi:schemaLocation="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0 http://www.unidata.ucar.edu/schemas/thredds/InvCatalog.1.0.6.xsd">
 
     <!-- Show all harvested S3 buckets -->
-    <catalogRef xlink:title="aims-ereefs-public-test" xlink:href="s3catalogue/aims-ereefs-public-test/catalog.xml" name=""/>
+    <catalogRef name="aims-ereefs-public-test" xlink:href="s3catalogue/aims-ereefs-public-test/catalog.xml" />
 
     <!-- Show only a branch of a S3 bucket -->
-    <catalogRef xlink:title="GBR4 v2" xlink:href="s3catalogue/aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/ongoing/catalog.xml" name=""/>
+    <catalogRef name="Data derived from the eReefs GBR4 v2 model" xlink:href="s3catalogue/aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/ongoing/catalog.xml" />
 
 </catalog>

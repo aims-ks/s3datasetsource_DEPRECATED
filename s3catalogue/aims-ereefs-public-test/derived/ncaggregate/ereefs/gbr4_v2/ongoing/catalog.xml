@@ -5,10 +5,10 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0 http://www.unidata.ucar.edu/schemas/thredds/InvCatalog.1.0.6.xsd">
 
-    
-        <catalogRef xlink:title="all-one" xlink:href="all-one/catalog.xml" name=""/>
-        <catalogRef xlink:title="annual-annual" xlink:href="annual-annual/catalog.xml" name=""/>
-        <catalogRef xlink:title="daily-monthly" xlink:href="daily-monthly/catalog.xml" name=""/>
-        <catalogRef xlink:title="monthly-monthly" xlink:href="monthly-monthly/catalog.xml" name=""/>
+
+        <catalogRef name="all-one" xlink:href="all-one/catalog.xml" />
+        <catalogRef name="annual-annual" xlink:href="annual-annual/catalog.xml" />
+        <catalogRef name="daily-monthly" xlink:href="daily-monthly/catalog.xml" />
+        <catalogRef name="monthly-monthly" xlink:href="monthly-monthly/catalog.xml" />
 
 </catalog>

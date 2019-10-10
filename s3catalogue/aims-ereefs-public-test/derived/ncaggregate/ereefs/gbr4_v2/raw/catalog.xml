@@ -5,10 +5,10 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0 http://www.unidata.ucar.edu/schemas/thredds/InvCatalog.1.0.6.xsd">
 
-    
-        <catalogRef xlink:title="current" xlink:href="current/catalog.xml" name=""/>
-        <catalogRef xlink:title="salt" xlink:href="salt/catalog.xml" name=""/>
-        <catalogRef xlink:title="temp" xlink:href="temp/catalog.xml" name=""/>
-        <catalogRef xlink:title="wspeed" xlink:href="wspeed/catalog.xml" name=""/>
+
+        <catalogRef name="current" xlink:href="current/catalog.xml" />
+        <catalogRef name="salt" xlink:href="salt/catalog.xml" />
+        <catalogRef name="temp" xlink:href="temp/catalog.xml" />
+        <catalogRef name="wspeed" xlink:href="wspeed/catalog.xml" />
 
 </catalog>

@@ -11,6 +11,27 @@ Follow the documentation on the [thredds DatasetSource plugin page][2].
 
 ### `catalog.xml`
 
+The `s3harvester` automatically creates a tree structure representing the NetCDF files found on S3.
+THREDDS load its root catalogue using the `catalog.xml` file found at the root of this project.
+
+To personalise the catalogue, modify the `catalog.xml` file to point it to the branches of interest
+that have been harvested.
+
+Example:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog name="eReefs model, derived Open Data Catalogue file"
+         xmlns="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0 http://www.unidata.ucar.edu/schemas/thredds/InvCatalog.1.0.6.xsd">
+
+    <catalogRef name="S3 Bucket aims-ereefs-public-test" xlink:href="s3catalogue/aims-ereefs-public-test/catalog.xml" />
+    <catalogRef name="Data derived from the eReefs GBR4 v2 model" xlink:href="s3catalogue/aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/ongoing/catalog.xml" />
+
+</catalog>
+```
+
 ### `threddsConfig.xml`
 
 ### `docker-compose.yml`
@@ -25,7 +46,13 @@ Store your AWS credentials in a file called `aws.env` in the root directory. You
 
 `$ docker-compose up` - builds and starts the thredds TDS with the supplied configuration.
 
-The data can then be seen at `http://localhost/thredds/catalogue.html
+The data can then be seen at `http://localhost:8888/thredds/catalogue.html`
+
+## Harvester
+
+TODO
+`http://localhost:8888/thredds/s3harvester`
+
 
 ### Credit  
 [@jamesmcclain](https://github.com/jamesmcclain) original author of [S3RandomAccessFile][4].
