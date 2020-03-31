@@ -218,7 +218,7 @@ Documentation about how to create an updated docker image for THREDDS with S3 su
 
     Disable vi Visual mode
 
-    **NOTE:** The latest version of `vi` have `virtual mode` enabled by default.
+    **NOTE:** Some version of `vi` have `virtual mode` enabled by default.
     That makes mouse selection and quick copy / paste impossible.
     It might have some advantages, but I could not find any.
     It's just an obnoxious feature in my opinion.
@@ -226,7 +226,7 @@ Documentation about how to create an updated docker image for THREDDS with S3 su
     :set mouse-=a
     ```
 
-    **NOTE:** You won't be able to copy paste this command because the `virtual mode`
+    You won't be able to copy paste this command because the `virtual mode`
     is enable by default. You will have to manually type it.
     Be careful with the syntax; there is a `-` (minus sign) before the `=` (equal sign).
 
