@@ -180,6 +180,18 @@ Documentation about how to create an updated docker image for THREDDS with S3 su
     $ docker-compose up
     ```
 
+    If you get **ERROR: Couldn't connect to Docker daemon**,
+    check if your user is member of the *docker* group:
+    ```
+    $ groups
+    ```
+
+    If not, add your user to the *docker* group. You may need to log out / log in
+    to your desktop environment for the changes to be effective.
+    ```
+    $ sudo usermod -a -G docker <YOUR USERNAME>
+    ```
+
     **NOTE:** The maven command can be done within your IDE.
     It can also be automatically done in the Docker container,
     but Docker needs to download the dependencies every time, which adds

@@ -89,6 +89,21 @@ public class S3HarvesterController implements ApplicationContextAware {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "The S3 harvesting was not configured");
 
         } else {
+            this.harvest();
+
+            // Send a "Harvesting done" message as a response text
+            try (ServletOutputStream outputStream = response.getOutputStream()) {
+                outputStream.println("Harvesting done");
+                outputStream.flush();
+            }
+        }
+    }
+
+    public void harvest() throws IOException {
+        if (this.config == null) {
+            throw new IllegalStateException("The S3 harvesting was not configured");
+
+        } else {
 
             File temporaryConfigDirectory = Files.createTempDirectory("s3harvester_").toFile();
             File currentConfigDirectory = this.config.getS3CatalogueDirectory();
@@ -148,18 +163,8 @@ public class S3HarvesterController implements ApplicationContextAware {
 
                 // Reload THREDDS configuration
                 this.reloadThreddsCatalogue();
-
-                // Send a "Harvesting done" message as a response text
-                try (ServletOutputStream outputStream = response.getOutputStream()) {
-                    outputStream.println("Harvesting done");
-                    outputStream.flush();
-                }
-
-
             } catch (Exception ex) {
                 LOGGER.error("Exception occurred while harvesting the S3 buckets", ex);
-
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, String.format("Exception occurred while harvesting the S3 buckets: %s", ex.getMessage()));
                 throw ex;
             } finally {
                 // Clean-up - Delete temporary config directory.
