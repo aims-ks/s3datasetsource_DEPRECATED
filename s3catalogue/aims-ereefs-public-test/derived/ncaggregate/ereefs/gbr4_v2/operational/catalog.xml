@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog name="eReefs model, derived Open Data Catalogue file"
+         xmlns="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0 http://www.unidata.ucar.edu/schemas/thredds/InvCatalog.1.0.6.xsd">
+
+
+        <catalogRef name="annual-annual" xlink:href="annual-annual/catalog.xml" />
+        <catalogRef name="daily-monthly-temp-range" xlink:href="daily-monthly-temp-range/catalog.xml" />
+        <catalogRef name="daily-monthly" xlink:href="daily-monthly/catalog.xml" />
+        <catalogRef name="monthly-monthly-fresh_water_exposure" xlink:href="monthly-monthly-fresh_water_exposure/catalog.xml" />
+        <catalogRef name="monthly-monthly-temp-range" xlink:href="monthly-monthly-temp-range/catalog.xml" />
+        <catalogRef name="monthly-monthly" xlink:href="monthly-monthly/catalog.xml" />
+
+</catalog>

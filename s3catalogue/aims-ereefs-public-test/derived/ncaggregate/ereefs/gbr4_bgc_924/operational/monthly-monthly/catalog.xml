@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog name="eReefs model, derived Open Data Catalogue file"
+         xmlns="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0 http://www.unidata.ucar.edu/schemas/thredds/InvCatalog.1.0.6.xsd">
+
+
+        <service name="all" base="" serviceType="compound">
+            <service name="odap" serviceType="OpenDAP" base="/thredds/dodsC/" />
+            <service name="http" serviceType="HTTPServer" base="/thredds/s3FileServer/" />
+            <service name="wms" serviceType="WMS" base="/thredds/wms/" />
+        </service>
+
+            <dataset name="gbr4_bgc_924-monthly-monthly-2014-12.nc" ID="gbr4_bgc_924-monthly-monthly-2014-12.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_bgc_924/operational/monthly-monthly/gbr4_bgc_924-monthly-monthly-2014-12.nc" dataType="Grid" />
+            <dataset name="gbr4_bgc_924-monthly-monthly-2015-01.nc" ID="gbr4_bgc_924-monthly-monthly-2015-01.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_bgc_924/operational/monthly-monthly/gbr4_bgc_924-monthly-monthly-2015-01.nc" dataType="Grid" />
+            <dataset name="gbr4_bgc_924-monthly-monthly-2015-02.nc" ID="gbr4_bgc_924-monthly-monthly-2015-02.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_bgc_924/operational/monthly-monthly/gbr4_bgc_924-monthly-monthly-2015-02.nc" dataType="Grid" />
+            <dataset name="gbr4_bgc_924-monthly-monthly-2015-03.nc" ID="gbr4_bgc_924-monthly-monthly-2015-03.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_bgc_924/operational/monthly-monthly/gbr4_bgc_924-monthly-monthly-2015-03.nc" dataType="Grid" />
+            <dataset name="gbr4_bgc_924-monthly-monthly-2015-04.nc" ID="gbr4_bgc_924-monthly-monthly-2015-04.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_bgc_924/operational/monthly-monthly/gbr4_bgc_924-monthly-monthly-2015-04.nc" dataType="Grid" />
+            <dataset name="gbr4_bgc_924-monthly-monthly-2015-05.nc" ID="gbr4_bgc_924-monthly-monthly-2015-05.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_bgc_924/operational/monthly-monthly/gbr4_bgc_924-monthly-monthly-2015-05.nc" dataType="Grid" />
+            <dataset name="gbr4_bgc_924-monthly-monthly-2015-06.nc" ID="gbr4_bgc_924-monthly-monthly-2015-06.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_bgc_924/operational/monthly-monthly/gbr4_bgc_924-monthly-monthly-2015-06.nc" dataType="Grid" />
+            <dataset name="gbr4_bgc_924-monthly-monthly-2015-07.nc" ID="gbr4_bgc_924-monthly-monthly-2015-07.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_bgc_924/operational/monthly-monthly/gbr4_bgc_924-monthly-monthly-2015-07.nc" dataType="Grid" />
+            <dataset name="gbr4_bgc_924-monthly-monthly-2015-08.nc" ID="gbr4_bgc_924-monthly-monthly-2015-08.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_bgc_924/operational/monthly-monthly/gbr4_bgc_924-monthly-monthly-2015-08.nc" dataType="Grid" />
+            <dataset name="gbr4_bgc_924-monthly-monthly-2015-09.nc" ID="gbr4_bgc_924-monthly-monthly-2015-09.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_bgc_924/operational/monthly-monthly/gbr4_bgc_924-monthly-monthly-2015-09.nc" dataType="Grid" />
+            <dataset name="gbr4_bgc_924-monthly-monthly-2015-10.nc" ID="gbr4_bgc_924-monthly-monthly-2015-10.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_bgc_924/operational/monthly-monthly/gbr4_bgc_924-monthly-monthly-2015-10.nc" dataType="Grid" />
+            <dataset name="gbr4_bgc_924-monthly-monthly-2015-11.nc" ID="gbr4_bgc_924-monthly-monthly-2015-11.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_bgc_924/operational/monthly-monthly/gbr4_bgc_924-monthly-monthly-2015-11.nc" dataType="Grid" />
+
+
+</catalog>

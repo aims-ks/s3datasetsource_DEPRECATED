@@ -6,7 +6,6 @@
          xsi:schemaLocation="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0 http://www.unidata.ucar.edu/schemas/thredds/InvCatalog.1.0.6.xsd">
 
 
-        <catalogRef name="ongoing" xlink:href="ongoing/catalog.xml" />
-        <catalogRef name="raw" xlink:href="raw/catalog.xml" />
+        <catalogRef name="operational" xlink:href="operational/catalog.xml" />
 
 </catalog>
