@@ -41,7 +41,13 @@
         </service>
 
         <#list datasets as dataset>
-            <dataset name="${dataset.name}" ID="${dataset.id}" serviceName="all" urlPath="${dataset.urlPath}" dataType="Grid" />
+            <#if dataset.metadataXmlStr?has_content>
+                <dataset name="${dataset.name}" ID="${dataset.id}" serviceName="all" urlPath="${dataset.urlPath}" dataType="Grid">
+                    ${dataset.metadataXmlStr}
+                </dataset>
+            <#else>
+                <dataset name="${dataset.name}" ID="${dataset.id}" serviceName="all" urlPath="${dataset.urlPath}" dataType="Grid" />
+            </#if>
         </#list>
     </#if>
 

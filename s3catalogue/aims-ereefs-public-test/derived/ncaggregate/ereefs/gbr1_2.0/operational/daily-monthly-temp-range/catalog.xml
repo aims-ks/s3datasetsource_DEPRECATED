@@ -12,7 +12,16 @@
             <service name="wms" serviceType="WMS" base="/thredds/wms/" />
         </service>
 
-            <dataset name="gbr1_2.0-daily-monthly-temp-range-2014-12.nc" ID="gbr1_2.0-daily-monthly-temp-range-2014-12.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr1_2.0/operational/daily-monthly-temp-range/gbr1_2.0-daily-monthly-temp-range-2014-12.nc" dataType="Grid" />
+                <dataset name="gbr1_2.0-daily-monthly-temp-range-2014-12.nc" ID="gbr1_2.0-daily-monthly-temp-range-2014-12.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr1_2.0/operational/daily-monthly-temp-range/gbr1_2.0-daily-monthly-temp-range-2014-12.nc" dataType="Grid">
+                    <metadata inherited="true">
+                        <documentation>
+                            Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
+                        </documentation>
+                        <documentation>
+                            All derived content made available under Creative Commons Attribution 4.0
+                        </documentation>
+                    </metadata>
+                </dataset>
 
 
 </catalog>

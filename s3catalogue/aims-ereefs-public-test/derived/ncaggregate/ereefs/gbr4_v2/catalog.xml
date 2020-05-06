@@ -7,5 +7,6 @@
 
 
         <catalogRef name="operational" xlink:href="operational/catalog.xml" />
+        <catalogRef name="raw" xlink:href="raw/catalog.xml" />
 
 </catalog>

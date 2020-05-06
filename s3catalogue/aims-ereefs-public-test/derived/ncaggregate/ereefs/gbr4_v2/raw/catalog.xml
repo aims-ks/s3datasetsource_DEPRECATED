@@ -12,7 +12,7 @@
             <service name="wms" serviceType="WMS" base="/thredds/wms/" />
         </service>
 
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2010-09.nc" ID="gbr4_v2-monthly-monthly-temp-range-2010-09.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2010-09.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2010-09.nc" ID="gbr4_v2-raw-2010-09.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2010-09.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -22,7 +22,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2010-10.nc" ID="gbr4_v2-monthly-monthly-temp-range-2010-10.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2010-10.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2010-10.nc" ID="gbr4_v2-raw-2010-10.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2010-10.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -32,7 +32,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2010-11.nc" ID="gbr4_v2-monthly-monthly-temp-range-2010-11.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2010-11.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2010-11.nc" ID="gbr4_v2-raw-2010-11.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2010-11.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -42,7 +42,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2010-12.nc" ID="gbr4_v2-monthly-monthly-temp-range-2010-12.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2010-12.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2010-12.nc" ID="gbr4_v2-raw-2010-12.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2010-12.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -52,7 +52,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2011-01.nc" ID="gbr4_v2-monthly-monthly-temp-range-2011-01.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2011-01.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2011-01.nc" ID="gbr4_v2-raw-2011-01.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2011-01.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -62,7 +62,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2011-02.nc" ID="gbr4_v2-monthly-monthly-temp-range-2011-02.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2011-02.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2011-02.nc" ID="gbr4_v2-raw-2011-02.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2011-02.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -72,7 +72,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2011-03.nc" ID="gbr4_v2-monthly-monthly-temp-range-2011-03.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2011-03.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2011-03.nc" ID="gbr4_v2-raw-2011-03.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2011-03.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -82,7 +82,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2011-04.nc" ID="gbr4_v2-monthly-monthly-temp-range-2011-04.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2011-04.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2011-04.nc" ID="gbr4_v2-raw-2011-04.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2011-04.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -92,7 +92,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2011-05.nc" ID="gbr4_v2-monthly-monthly-temp-range-2011-05.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2011-05.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2011-05.nc" ID="gbr4_v2-raw-2011-05.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2011-05.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -102,7 +102,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2011-06.nc" ID="gbr4_v2-monthly-monthly-temp-range-2011-06.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2011-06.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2011-06.nc" ID="gbr4_v2-raw-2011-06.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2011-06.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -112,7 +112,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2011-07.nc" ID="gbr4_v2-monthly-monthly-temp-range-2011-07.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2011-07.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2011-07.nc" ID="gbr4_v2-raw-2011-07.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2011-07.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -122,7 +122,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2011-08.nc" ID="gbr4_v2-monthly-monthly-temp-range-2011-08.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2011-08.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2011-08.nc" ID="gbr4_v2-raw-2011-08.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2011-08.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -132,7 +132,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2011-09.nc" ID="gbr4_v2-monthly-monthly-temp-range-2011-09.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2011-09.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2011-09.nc" ID="gbr4_v2-raw-2011-09.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2011-09.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -142,7 +142,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2011-10.nc" ID="gbr4_v2-monthly-monthly-temp-range-2011-10.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2011-10.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2011-10.nc" ID="gbr4_v2-raw-2011-10.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2011-10.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -152,7 +152,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2011-11.nc" ID="gbr4_v2-monthly-monthly-temp-range-2011-11.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2011-11.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2011-11.nc" ID="gbr4_v2-raw-2011-11.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2011-11.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -162,7 +162,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2011-12.nc" ID="gbr4_v2-monthly-monthly-temp-range-2011-12.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2011-12.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2011-12.nc" ID="gbr4_v2-raw-2011-12.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2011-12.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -172,7 +172,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2012-01.nc" ID="gbr4_v2-monthly-monthly-temp-range-2012-01.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2012-01.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2012-01.nc" ID="gbr4_v2-raw-2012-01.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2012-01.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -182,7 +182,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2012-02.nc" ID="gbr4_v2-monthly-monthly-temp-range-2012-02.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2012-02.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2012-02.nc" ID="gbr4_v2-raw-2012-02.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2012-02.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -192,7 +192,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2012-03.nc" ID="gbr4_v2-monthly-monthly-temp-range-2012-03.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2012-03.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2012-03.nc" ID="gbr4_v2-raw-2012-03.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2012-03.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -202,7 +202,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2012-04.nc" ID="gbr4_v2-monthly-monthly-temp-range-2012-04.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2012-04.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2012-04.nc" ID="gbr4_v2-raw-2012-04.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2012-04.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -212,7 +212,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2012-05.nc" ID="gbr4_v2-monthly-monthly-temp-range-2012-05.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2012-05.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2012-05.nc" ID="gbr4_v2-raw-2012-05.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2012-05.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -222,7 +222,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2012-06.nc" ID="gbr4_v2-monthly-monthly-temp-range-2012-06.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2012-06.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2012-06.nc" ID="gbr4_v2-raw-2012-06.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2012-06.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -232,7 +232,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2012-07.nc" ID="gbr4_v2-monthly-monthly-temp-range-2012-07.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2012-07.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2012-07.nc" ID="gbr4_v2-raw-2012-07.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2012-07.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -242,7 +242,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2012-08.nc" ID="gbr4_v2-monthly-monthly-temp-range-2012-08.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2012-08.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2012-08.nc" ID="gbr4_v2-raw-2012-08.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2012-08.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -252,7 +252,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2012-09.nc" ID="gbr4_v2-monthly-monthly-temp-range-2012-09.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2012-09.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2012-09.nc" ID="gbr4_v2-raw-2012-09.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2012-09.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
@@ -262,7 +262,7 @@
                         </documentation>
                     </metadata>
                 </dataset>
-                <dataset name="gbr4_v2-monthly-monthly-temp-range-2012-10.nc" ID="gbr4_v2-monthly-monthly-temp-range-2012-10.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-temp-range/gbr4_v2-monthly-monthly-temp-range-2012-10.nc" dataType="Grid">
+                <dataset name="gbr4_v2-raw-2012-10.nc" ID="gbr4_v2-raw-2012-10.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/raw/gbr4_v2-raw-2012-10.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html

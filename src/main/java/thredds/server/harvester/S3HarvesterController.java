@@ -38,6 +38,7 @@ import uk.co.informaticslab.S3DatasetSource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -51,7 +52,7 @@ import java.util.TreeSet;
 /**
  * Generate THREDDS catalog.xml configuration for given S3 buckets
  *
- * handles /s3harvester/*
+ * handles /s3harvester
  */
 @Controller
 @RequestMapping("/s3harvester")
@@ -116,12 +117,12 @@ public class S3HarvesterController implements ApplicationContextAware {
                 //   Some "catalog.xml" files may represent S3 directories that no longer exists. They need to be deleted.
                 for (S3HarvesterConfiguration.S3HarvesterBucketConfiguration bucketConfig : this.config.getBucketConfigurations()) {
                     String bucket = bucketConfig.getBucket();
-                    List<String> paths = bucketConfig.getPaths();
+                    List<S3HarvesterConfiguration.S3HarvesterPathConfiguration> paths = bucketConfig.getPaths();
 
                     // If the bucket is configured with no path, add a "null" path,
                     // to indicate that we want to harvest the whole bucket
                     if (paths == null || paths.size() <= 0) {
-                        paths = new ArrayList<String>();
+                        paths = new ArrayList<S3HarvesterConfiguration.S3HarvesterPathConfiguration>();
                         paths.add(null);
                     }
 
@@ -129,8 +130,9 @@ public class S3HarvesterController implements ApplicationContextAware {
                         if (!this.s3Client.doesBucketExist(bucket)) {
                             LOGGER.error(String.format("Bucket %s does not exist", bucket));
                         } else {
-                            Set<String> netCDFFilePaths = new TreeSet<String>();
-                            for (String path : paths) {
+                            Set<S3HarvesterConfiguration.S3HarvesterPathConfiguration> netCDFFilePaths =
+                                    new TreeSet<S3HarvesterConfiguration.S3HarvesterPathConfiguration>();
+                            for (S3HarvesterConfiguration.S3HarvesterPathConfiguration path : paths) {
                                 netCDFFilePaths.addAll(this.getNetCDFFilePaths(bucket, path));
                             }
 
@@ -200,7 +202,8 @@ public class S3HarvesterController implements ApplicationContextAware {
                     catalogTemplate.addDataset(
                             child.getFilename(),
                             child.getFilename(),
-                            S3DatasetSource.S3_PREFIX + child.getPath());
+                            S3DatasetSource.S3_PREFIX + child.getPath(),
+                            child.getMetadataXmlStr());
                 }
             }
 
@@ -213,14 +216,16 @@ public class S3HarvesterController implements ApplicationContextAware {
         return catalogFile;
     }
 
-    private Set<String> getNetCDFFilePaths(String bucket, String path) {
-        Set<String> netCDFFilePaths = new TreeSet<String>();
+    private Set<S3HarvesterConfiguration.S3HarvesterPathConfiguration> getNetCDFFilePaths(String bucket, S3HarvesterConfiguration.S3HarvesterPathConfiguration path) {
+        Set<S3HarvesterConfiguration.S3HarvesterPathConfiguration> netCDFFilePaths =
+                new TreeSet<S3HarvesterConfiguration.S3HarvesterPathConfiguration>();
+        String pathStr = path.getPath();
 
         // Inspired from:
         //     https://docs.aws.amazon.com/AmazonS3/latest/dev/ListingObjectKeysUsingJava.html
         ListObjectsV2Request req = new ListObjectsV2Request().withBucketName(bucket).withMaxKeys(1000);
-        if (path != null && !path.isEmpty()) {
-            req.withPrefix(path);
+        if (pathStr != null && !pathStr.isEmpty()) {
+            req.withPrefix(pathStr);
         }
 
         ListObjectsV2Result result;
@@ -230,7 +235,8 @@ public class S3HarvesterController implements ApplicationContextAware {
             for (S3ObjectSummary objectSummary : result.getObjectSummaries()) {
                 String filename = objectSummary.getKey();
                 if (".nc".equalsIgnoreCase(filename.substring(filename.length() - 3))) {
-                    netCDFFilePaths.add(filename);
+                    netCDFFilePaths.add(new S3HarvesterConfiguration.S3HarvesterPathConfiguration(
+                            filename, path.getMetadata()));
                 }
             }
             // If there are more than maxKeys keys in the bucket, get a continuation token
@@ -263,19 +269,20 @@ public class S3HarvesterController implements ApplicationContextAware {
      * @param filePaths
      * @return
      */
-    protected static S3File parseFilePaths(String bucket, Set<String> filePaths) {
+    protected static S3File parseFilePaths(String bucket, Set<S3HarvesterConfiguration.S3HarvesterPathConfiguration> filePaths) throws TransformerException {
         Map<String, S3File> directories = new HashMap<String, S3File>();
-        S3File root = new S3File(bucket, bucket);
+        S3File root = new S3File(bucket, bucket, null);
 
-        for (String filePath : filePaths) {
+        for (S3HarvesterConfiguration.S3HarvesterPathConfiguration filePath : filePaths) {
             S3File parent = root;
-            String[] filePathParts = filePath.split("/");
+            String filePathValue = filePath.getPath();
+            String[] filePathParts = filePathValue.split("/");
 
             for (String filePart : filePathParts) {
                 String path = parent.getPath() + "/" + filePart;
                 S3File dir = directories.get(path);
                 if (dir == null) {
-                    dir = new S3File(bucket, path);
+                    dir = new S3File(bucket, path, filePath.getMetadataStr());
                     directories.put(path, dir);
                     parent.addChild(dir);
                 }
@@ -404,10 +411,12 @@ public class S3HarvesterController implements ApplicationContextAware {
         private List<S3File> children;
         private String bucket;
         private String path;
+        private String metadataXmlStr;
 
-        public S3File(String bucket, String path) {
+        public S3File(String bucket, String path, String metadataXmlStr) {
             this.bucket = bucket;
             this.path = path;
+            this.metadataXmlStr = metadataXmlStr;
             this.children = null;
 
             while (this.path.endsWith("/")) {
@@ -441,6 +450,10 @@ public class S3HarvesterController implements ApplicationContextAware {
 
         public String getPath() {
             return this.path;
+        }
+
+        public String getMetadataXmlStr() {
+            return this.metadataXmlStr;
         }
 
         @Override

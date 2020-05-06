@@ -4,7 +4,7 @@
     <buckets>
         <bucket name="aims-ereefs-public-test">
             <paths>
-                <path>derived/ncaggregate</path>
+                <path value="derived/ncaggregate" />
             </paths>
         </bucket>
     </buckets>

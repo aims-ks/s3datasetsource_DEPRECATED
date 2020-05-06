@@ -12,7 +12,17 @@
             <service name="wms" serviceType="WMS" base="/thredds/wms/" />
         </service>
 
-                <dataset name="gbr4_v2-monthly-monthly-fresh_water_exposure-2011-01.nc" ID="gbr4_v2-monthly-monthly-fresh_water_exposure-2011-01.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/operational/monthly-monthly-fresh_water_exposure/gbr4_v2-monthly-monthly-fresh_water_exposure-2011-01.nc" dataType="Grid">
+                <dataset name="GBR4_H2p0_B3p1_Cq3R_Dhnd-monthly-monthly-2010-12.nc" ID="GBR4_H2p0_B3p1_Cq3R_Dhnd-monthly-monthly-2010-12.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/GBR4_H2p0_B3p1_Cq3R_Dhnd/operational/monthly-monthly/GBR4_H2p0_B3p1_Cq3R_Dhnd-monthly-monthly-2010-12.nc" dataType="Grid">
+                    <metadata inherited="true">
+                        <documentation>
+                            Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
+                        </documentation>
+                        <documentation>
+                            All derived content made available under Creative Commons Attribution 4.0
+                        </documentation>
+                    </metadata>
+                </dataset>
+                <dataset name="GBR4_H2p0_B3p1_Cq3R_Dhnd-monthly-monthly-2011-01.nc" ID="GBR4_H2p0_B3p1_Cq3R_Dhnd-monthly-monthly-2011-01.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/GBR4_H2p0_B3p1_Cq3R_Dhnd/operational/monthly-monthly/GBR4_H2p0_B3p1_Cq3R_Dhnd-monthly-monthly-2011-01.nc" dataType="Grid">
                     <metadata inherited="true">
                         <documentation>
                             Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html

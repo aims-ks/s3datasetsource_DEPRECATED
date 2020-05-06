@@ -6,9 +6,11 @@
          xsi:schemaLocation="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0 http://www.unidata.ucar.edu/schemas/thredds/InvCatalog.1.0.6.xsd">
 
 
+        <catalogRef name="GBR4_H2p0_B3p1_Cq3P_Dhnd" xlink:href="GBR4_H2p0_B3p1_Cq3P_Dhnd/catalog.xml" />
+        <catalogRef name="GBR4_H2p0_B3p1_Cq3R_Dhnd" xlink:href="GBR4_H2p0_B3p1_Cq3R_Dhnd/catalog.xml" />
+        <catalogRef name="GBR4_H2p0_B3p1_Cq3b_Dhnd" xlink:href="GBR4_H2p0_B3p1_Cq3b_Dhnd/catalog.xml" />
         <catalogRef name="gbr1_2.0" xlink:href="gbr1_2.0/catalog.xml" />
         <catalogRef name="gbr4_bgc_924" xlink:href="gbr4_bgc_924/catalog.xml" />
-        <catalogRef name="gbr4_bgc_GBR4_H2p0_B3p1_Cq3b_Dhnd" xlink:href="gbr4_bgc_GBR4_H2p0_B3p1_Cq3b_Dhnd/catalog.xml" />
         <catalogRef name="gbr4_v2" xlink:href="gbr4_v2/catalog.xml" />
 
 </catalog>

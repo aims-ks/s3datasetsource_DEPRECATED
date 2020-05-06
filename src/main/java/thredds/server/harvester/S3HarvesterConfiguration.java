@@ -26,10 +26,17 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,7 +129,7 @@ public class S3HarvesterConfiguration {
         Node nameNode = bucketAttributes.getNamedItem("name");
         String bucketName = nameNode.getTextContent();
 
-        S3HarvesterBucketConfiguration bucketConfig = new S3HarvesterBucketConfiguration(bucketName);
+        S3HarvesterBucketConfiguration bucketConfig = new S3HarvesterBucketConfiguration(bucketName, this.configFile);
 
         NodeList bucketPaths = bucketElement.getElementsByTagName("paths");
         int nbBucketPaths = bucketPaths == null ? 0 : bucketPaths.getLength();
@@ -139,8 +146,8 @@ public class S3HarvesterConfiguration {
             }
 
             for (int i=0; i<nbBucketPathNodes; i++) {
-                String bucketPath = this.parseBucketPath((Element)bucketPathNodes.item(i));
-                bucketConfig.addPath(bucketPath);
+                Element bucketPathElement = (Element)bucketPathNodes.item(i);
+                bucketConfig.addPath(bucketPathElement);
             }
         }
 
@@ -165,26 +172,115 @@ public class S3HarvesterConfiguration {
     }
 
     public static class S3HarvesterBucketConfiguration {
+        private File configFile;
         private String bucket;
-        private List<String> paths;
+        private List<S3HarvesterPathConfiguration> paths;
 
-        public S3HarvesterBucketConfiguration(String bucket) {
+        public S3HarvesterBucketConfiguration(String bucket, File configFile) {
             this.bucket = bucket;
+            this.configFile = configFile;
         }
 
-        protected void addPath(String path) {
+        protected void addPath(Element pathEl) throws Exception {
             if (this.paths == null) {
-                this.paths = new ArrayList<String>();
+                this.paths = new ArrayList<S3HarvesterPathConfiguration>();
             }
-            this.paths.add(path);
+            this.paths.add(new S3HarvesterPathConfiguration(pathEl, this.bucket, this.configFile));
         }
 
         public String getBucket() {
             return this.bucket;
         }
 
-        public List<String> getPaths() {
+        public List<S3HarvesterPathConfiguration> getPaths() {
             return this.paths;
+        }
+    }
+
+    public static class S3HarvesterPathConfiguration implements Comparable<S3HarvesterPathConfiguration> {
+        private static Transformer transformer;
+
+        private File configFile;
+        private String bucket;
+        private String path;
+        private Element metadata;
+
+        public S3HarvesterPathConfiguration(Element pathEl, String bucket, File configFile) throws Exception {
+            this.bucket = bucket;
+            this.configFile = configFile;
+
+            this.path = pathEl.getAttribute("value");
+
+            NodeList metadataNodes = pathEl.getElementsByTagName("metadata");
+            if (metadataNodes != null) {
+                int nbMetadataNodes = metadataNodes.getLength();
+                if (nbMetadataNodes > 0) {
+                    if (nbMetadataNodes > 1) {
+                        throw new Exception(String.format("Invalid S3Harvester configuration file: %s. Too many metadata elements in \"s3HarvesterConfig.buckets.bucket.paths.path\" for bucket %s.",
+                                this.configFile, this.bucket));
+                    }
+
+                    this.metadata = (Element)metadataNodes.item(0);
+                }
+            }
+        }
+
+        public S3HarvesterPathConfiguration(String path, Element metadata) {
+            this.path = path;
+            this.metadata = metadata;
+        }
+
+        public String getPath() {
+            return this.path;
+        }
+
+        public Element getMetadata() {
+            return this.metadata;
+        }
+
+        public String getMetadataStr() throws TransformerException {
+            if (this.metadata == null) {
+                return null;
+            }
+
+            if (transformer == null) {
+                TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                transformer = transformerFactory.newTransformer();
+                transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            }
+
+            StringWriter buffer = new StringWriter();
+            transformer.transform(new DOMSource(this.metadata),
+                  new StreamResult(buffer));
+            return buffer.toString();
+        }
+
+        @Override
+        public int compareTo(S3HarvesterPathConfiguration other) {
+            if (other == null) {
+                return 1;
+            }
+
+            // Same instance
+            if (this == other) {
+                return 0;
+            }
+
+            String otherPath = other.getPath();
+
+            // Both null or same String instance
+            if (this.path == otherPath) {
+                return 0;
+            }
+
+            if (this.path == null) {
+                return -1;
+            }
+            if (otherPath == null) {
+                return 1;
+            }
+
+            return this.path.compareTo(otherPath);
         }
     }
 }

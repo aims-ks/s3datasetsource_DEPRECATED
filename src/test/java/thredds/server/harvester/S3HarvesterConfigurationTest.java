@@ -53,13 +53,13 @@ public class S3HarvesterConfigurationTest {
         Assert.assertNotNull("First bucket is missing", publicBucket);
         Assert.assertEquals("Wrong first bucket name", "aims-ereefs-public-test", publicBucket.getBucket());
 
-        List<String> firstBucketPaths = publicBucket.getPaths();
+        List<S3HarvesterConfiguration.S3HarvesterPathConfiguration> firstBucketPaths = publicBucket.getPaths();
         Assert.assertNotNull("First bucket have no paths", firstBucketPaths);
         Assert.assertEquals("Wrong number of paths in first bucket", 1, firstBucketPaths.size());
 
-        String firstBucketPath = firstBucketPaths.get(0);
+        S3HarvesterConfiguration.S3HarvesterPathConfiguration firstBucketPath = firstBucketPaths.get(0);
         Assert.assertNotNull("First path of first bucket is null", firstBucketPath);
-        Assert.assertEquals("Wrong first path of first bucket", "derived/ncaggregate", firstBucketPath);
+        Assert.assertEquals("Wrong first path of first bucket", "derived/ncaggregate", firstBucketPath.getPath());
     }
 
     @Test(expected = Exception.class)
@@ -76,6 +76,15 @@ public class S3HarvesterConfigurationTest {
 
     @Test
     public void testParseLargeConfigFile() throws Exception {
+        String expectedMetadata = "<metadata inherited=\"true\">\n" +
+                "                        <documentation>\n" +
+                "                            Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html\n" +
+                "                        </documentation>\n" +
+                "                        <documentation>\n" +
+                "                            All derived content made available under Creative Commons Attribution 4.0\n" +
+                "                        </documentation>\n" +
+                "                    </metadata>";
+
         // Find the config file in the test/resources directory
         URL configFileURL = S3HarvesterConfigurationTest.class.getClassLoader().getResource("s3harvester_large.xml");
         File configFile = new File(configFileURL.toURI());
@@ -101,37 +110,40 @@ public class S3HarvesterConfigurationTest {
         Assert.assertNotNull("First bucket is missing", publicBucket);
         Assert.assertEquals("Wrong first bucket name", "aims-ereefs-public-test", publicBucket.getBucket());
 
-        List<String> publicBucketPaths = publicBucket.getPaths();
+        List<S3HarvesterConfiguration.S3HarvesterPathConfiguration> publicBucketPaths = publicBucket.getPaths();
         Assert.assertNotNull("First bucket have no paths", publicBucketPaths);
         Assert.assertEquals("Wrong number of paths in first bucket", 1, publicBucketPaths.size());
 
-        String publicBucketPath = publicBucketPaths.get(0);
+        S3HarvesterConfiguration.S3HarvesterPathConfiguration publicBucketPath = publicBucketPaths.get(0);
         Assert.assertNotNull("First path of first bucket is null", publicBucketPath);
-        Assert.assertEquals("Wrong first path of first bucket", "derived/ncaggregate", publicBucketPath);
+        Assert.assertEquals("Wrong first path of first bucket", "derived/ncaggregate", publicBucketPath.getPath());
+        Assert.assertNull("Wrong first path metadata of first bucket", publicBucketPath.getMetadataStr());
 
 
         S3HarvesterConfiguration.S3HarvesterBucketConfiguration privateBucket = bucketConfigurations.get(1);
         Assert.assertNotNull("2nd bucket is missing", privateBucket);
         Assert.assertEquals("Wrong 2nd bucket name", "aims-ereefs-private-test", privateBucket.getBucket());
 
-        List<String> privateBucketPaths = privateBucket.getPaths();
+        List<S3HarvesterConfiguration.S3HarvesterPathConfiguration> privateBucketPaths = privateBucket.getPaths();
         Assert.assertNotNull("2nd bucket have no paths", privateBucketPaths);
         Assert.assertEquals("Wrong number of paths in 2nd bucket", 2, privateBucketPaths.size());
 
-        String privateBucketPath0 = privateBucketPaths.get(0);
+        S3HarvesterConfiguration.S3HarvesterPathConfiguration privateBucketPath0 = privateBucketPaths.get(0);
         Assert.assertNotNull("First path of 2nd bucket is null", privateBucketPath0);
-        Assert.assertEquals("Wrong first path of 2nd bucket", "ongoing/ncaggregate", privateBucketPath0);
+        Assert.assertEquals("Wrong first path of 2nd bucket", "ongoing/ncaggregate", privateBucketPath0.getPath());
+        Assert.assertNull("Wrong first path metadata of 2nd bucket", privateBucketPath0.getMetadataStr());
 
-        String privateBucketPath1 = privateBucketPaths.get(1);
+        S3HarvesterConfiguration.S3HarvesterPathConfiguration privateBucketPath1 = privateBucketPaths.get(1);
         Assert.assertNotNull("2nd path of 2nd bucket is null", privateBucketPath1);
-        Assert.assertEquals("Wrong 2nd path of 2nd bucket", "ongoing/ncanimate", privateBucketPath1);
+        Assert.assertEquals("Wrong 2nd path of 2nd bucket", "ongoing/ncanimate", privateBucketPath1.getPath());
+        Assert.assertEquals("Wrong 2nd path metadata of 2nd bucket", expectedMetadata, privateBucketPath1.getMetadataStr());
 
 
         S3HarvesterConfiguration.S3HarvesterBucketConfiguration ereefsBucket = bucketConfigurations.get(2);
         Assert.assertNotNull("3rd bucket is missing", ereefsBucket);
         Assert.assertEquals("Wrong 3rd bucket name", "aims-ereefs", ereefsBucket.getBucket());
 
-        List<String> ereefsBucketPaths = ereefsBucket.getPaths();
+        List<S3HarvesterConfiguration.S3HarvesterPathConfiguration> ereefsBucketPaths = ereefsBucket.getPaths();
         Assert.assertTrue("3rd bucket have paths", ereefsBucketPaths == null || ereefsBucketPaths.isEmpty());
     }
 }

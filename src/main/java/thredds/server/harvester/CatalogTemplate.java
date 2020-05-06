@@ -58,8 +58,8 @@ public class CatalogTemplate {
         this.catalogRefs = new ArrayList<CatalogRef>();
     }
 
-    public void addDataset(String name, String id, String urlPath) {
-        this.datasets.add(new Dataset(name, id, urlPath));
+    public void addDataset(String name, String id, String urlPath, String metadataXmlStr) {
+        this.datasets.add(new Dataset(name, id, urlPath, metadataXmlStr));
     }
 
     public void addCatalogRef(String name, String href) {
@@ -88,11 +88,13 @@ public class CatalogTemplate {
         private String name;
         private String id;
         private String urlPath;
+        private String metadataXmlStr;
 
-        public Dataset(String name, String id, String urlPath) {
+        public Dataset(String name, String id, String urlPath, String metadataXmlStr) {
             this.name = name;
             this.id = id;
             this.urlPath = urlPath;
+            this.metadataXmlStr = metadataXmlStr;
         }
 
         public String getName() {
@@ -105,6 +107,10 @@ public class CatalogTemplate {
 
         public String getUrlPath() {
             return this.urlPath;
+        }
+
+        public String getMetadataXmlStr() {
+            return this.metadataXmlStr;
         }
     }
 
