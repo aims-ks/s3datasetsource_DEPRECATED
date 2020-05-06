@@ -42,10 +42,10 @@ Documentation about how to create an updated docker image for THREDDS with S3 su
     public static final Regions MY_S3_DATA_REGION = Regions.US_EAST_1;
     ```
 
-2. Configure (if cloning from original)
+3. Configure (if cloning from original)
 
     ```
-    catalog.xml - thredds catalog configuration. ???
+    catalog.xml - thredds catalog configuration.
     threddsConfig.xml - thredds main configuration file.
     docker-compose.yml - docker compose file to start thredds TDS with supplied configuration.
     ```
@@ -164,7 +164,7 @@ Documentation about how to create an updated docker image for THREDDS with S3 su
     FROM unidata/thredds-docker:4.6.14
     ```
 
-3. Create the docker container
+4. Create the docker container
 
     Clean up?
     ```
@@ -202,14 +202,14 @@ Documentation about how to create an updated docker image for THREDDS with S3 su
     $ docker-compose up --force-recreate --build
     ```
 
-4. Verify and connect to the running docker instance for debugging
+5. Verify and connect to the running docker instance for debugging
 
     You can connect to the Docker container to verify what was done.
 
     Connect to the docker image
     ```
     $ docker ps
-    $ docker exec -it <DOCKER CONTAINER ID> bash
+    $ docker exec -it thredds bash
     ```
 
     Enable colours with ls and create "ll" alias
@@ -251,14 +251,14 @@ Documentation about how to create an updated docker image for THREDDS with S3 su
     "endif
     ```
 
-5. Visit URL:
+6. Visit URL:
 
     http://localhost:8888/thredds/catalog.html
 
     **NOTE:** In the original project, `ingest.py` was used to generate the catalog.xml file.
     THREDDS doesn't have support for generic. Needs to be re-written
 
-6. Harvest S3 bucket(s)
+7. Harvest S3 bucket(s)
 
     I have created a REST endpoint which automatically harvest the
     S3 bucket(s) and restart THREDDS webapp.
