@@ -1,0 +1,3 @@
+# Deny all robots (Internet Crawlers)
+User-agent: *
+Disallow: /
