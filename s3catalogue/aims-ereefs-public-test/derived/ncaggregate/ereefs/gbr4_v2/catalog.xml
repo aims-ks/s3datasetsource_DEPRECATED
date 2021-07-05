@@ -6,7 +6,12 @@
          xsi:schemaLocation="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0 http://www.unidata.ucar.edu/schemas/thredds/InvCatalog.1.0.6.xsd">
 
 
-        <catalogRef name="operational" xlink:href="operational/catalog.xml" />
-        <catalogRef name="raw" xlink:href="raw/catalog.xml" />
+        <catalogRef name="all-one" xlink:href="all-one/catalog.xml" />
+        <catalogRef name="annual-annual" xlink:href="annual-annual/catalog.xml" />
+        <catalogRef name="daily-monthly" xlink:href="daily-monthly/catalog.xml" />
+        <catalogRef name="fresh_water_exposure-monthly-monthly" xlink:href="fresh_water_exposure-monthly-monthly/catalog.xml" />
+        <catalogRef name="monthly-monthly" xlink:href="monthly-monthly/catalog.xml" />
+        <catalogRef name="temp_range-daily-monthly" xlink:href="temp_range-daily-monthly/catalog.xml" />
+        <catalogRef name="temp_range-monthly-monthly" xlink:href="temp_range-monthly-monthly/catalog.xml" />
 
 </catalog>

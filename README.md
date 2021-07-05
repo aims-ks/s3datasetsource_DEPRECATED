@@ -74,7 +74,7 @@ Built artifact can be found in the target directory:
 
 **NOTE:** You will need to build the plugin prior to run this.
 
-The data can then be seen at `http://localhost:8888/thredds/catalogue.html`
+The data can then be seen at `http://localhost:8888/thredds/catalog.html`
 
 ## S3 Harvester
 
