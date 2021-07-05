@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog name="eReefs model, derived Open Data Catalogue file"
+         xmlns="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0 http://www.unidata.ucar.edu/schemas/thredds/InvCatalog.1.0.6.xsd">
+
+
+        <service name="all" base="" serviceType="compound">
+            <service name="odap" serviceType="OpenDAP" base="/thredds/dodsC/" />
+            <service name="http" serviceType="HTTPServer" base="/thredds/s3FileServer/" />
+            <service name="wms" serviceType="WMS" base="/thredds/wms/" />
+        </service>
+
+                <dataset name="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2010-12.nc" ID="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2010-12.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/GBR4_H2p0_B3p1_Cq3b_Dhnd/monthly-monthly/EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2010-12.nc" dataType="Grid">
+                    <metadata inherited="true">
+                        <documentation>
+                            Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
+                        </documentation>
+                        <documentation>
+                            All derived content made available under Creative Commons Attribution 4.0
+                        </documentation>
+                    </metadata>
+                </dataset>
+                <dataset name="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2011-01.nc" ID="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2011-01.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/GBR4_H2p0_B3p1_Cq3b_Dhnd/monthly-monthly/EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2011-01.nc" dataType="Grid">
+                    <metadata inherited="true">
+                        <documentation>
+                            Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
+                        </documentation>
+                        <documentation>
+                            All derived content made available under Creative Commons Attribution 4.0
+                        </documentation>
+                    </metadata>
+                </dataset>
+                <dataset name="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2011-02.nc" ID="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2011-02.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/GBR4_H2p0_B3p1_Cq3b_Dhnd/monthly-monthly/EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2011-02.nc" dataType="Grid">
+                    <metadata inherited="true">
+                        <documentation>
+                            Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
+                        </documentation>
+                        <documentation>
+                            All derived content made available under Creative Commons Attribution 4.0
+                        </documentation>
+                    </metadata>
+                </dataset>
+                <dataset name="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2011-03.nc" ID="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2011-03.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/GBR4_H2p0_B3p1_Cq3b_Dhnd/monthly-monthly/EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2011-03.nc" dataType="Grid">
+                    <metadata inherited="true">
+                        <documentation>
+                            Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
+                        </documentation>
+                        <documentation>
+                            All derived content made available under Creative Commons Attribution 4.0
+                        </documentation>
+                    </metadata>
+                </dataset>
+                <dataset name="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2011-04.nc" ID="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2011-04.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/GBR4_H2p0_B3p1_Cq3b_Dhnd/monthly-monthly/EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2011-04.nc" dataType="Grid">
+                    <metadata inherited="true">
+                        <documentation>
+                            Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
+                        </documentation>
+                        <documentation>
+                            All derived content made available under Creative Commons Attribution 4.0
+                        </documentation>
+                    </metadata>
+                </dataset>
+                <dataset name="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2011-05.nc" ID="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2011-05.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/GBR4_H2p0_B3p1_Cq3b_Dhnd/monthly-monthly/EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2011-05.nc" dataType="Grid">
+                    <metadata inherited="true">
+                        <documentation>
+                            Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
+                        </documentation>
+                        <documentation>
+                            All derived content made available under Creative Commons Attribution 4.0
+                        </documentation>
+                    </metadata>
+                </dataset>
+                <dataset name="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2011-06.nc" ID="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2011-06.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/GBR4_H2p0_B3p1_Cq3b_Dhnd/monthly-monthly/EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2011-06.nc" dataType="Grid">
+                    <metadata inherited="true">
+                        <documentation>
+                            Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
+                        </documentation>
+                        <documentation>
+                            All derived content made available under Creative Commons Attribution 4.0
+                        </documentation>
+                    </metadata>
+                </dataset>
+                <dataset name="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2011-07.nc" ID="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2011-07.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/GBR4_H2p0_B3p1_Cq3b_Dhnd/monthly-monthly/EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-2011-07.nc" dataType="Grid">
+                    <metadata inherited="true">
+                        <documentation>
+                            Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
+                        </documentation>
+                        <documentation>
+                            All derived content made available under Creative Commons Attribution 4.0
+                        </documentation>
+                    </metadata>
+                </dataset>
+                <dataset name="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2010-12.nc" ID="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2010-12.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/GBR4_H2p0_B3p1_Cq3b_Dhnd/monthly-monthly/EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2010-12.nc" dataType="Grid">
+                    <metadata inherited="true">
+                        <documentation>
+                            Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
+                        </documentation>
+                        <documentation>
+                            All derived content made available under Creative Commons Attribution 4.0
+                        </documentation>
+                    </metadata>
+                </dataset>
+                <dataset name="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2011-01.nc" ID="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2011-01.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/GBR4_H2p0_B3p1_Cq3b_Dhnd/monthly-monthly/EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2011-01.nc" dataType="Grid">
+                    <metadata inherited="true">
+                        <documentation>
+                            Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
+                        </documentation>
+                        <documentation>
+                            All derived content made available under Creative Commons Attribution 4.0
+                        </documentation>
+                    </metadata>
+                </dataset>
+                <dataset name="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2011-02.nc" ID="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2011-02.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/GBR4_H2p0_B3p1_Cq3b_Dhnd/monthly-monthly/EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2011-02.nc" dataType="Grid">
+                    <metadata inherited="true">
+                        <documentation>
+                            Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
+                        </documentation>
+                        <documentation>
+                            All derived content made available under Creative Commons Attribution 4.0
+                        </documentation>
+                    </metadata>
+                </dataset>
+                <dataset name="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2011-03.nc" ID="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2011-03.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/GBR4_H2p0_B3p1_Cq3b_Dhnd/monthly-monthly/EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2011-03.nc" dataType="Grid">
+                    <metadata inherited="true">
+                        <documentation>
+                            Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
+                        </documentation>
+                        <documentation>
+                            All derived content made available under Creative Commons Attribution 4.0
+                        </documentation>
+                    </metadata>
+                </dataset>
+                <dataset name="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2011-04.nc" ID="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2011-04.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/GBR4_H2p0_B3p1_Cq3b_Dhnd/monthly-monthly/EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2011-04.nc" dataType="Grid">
+                    <metadata inherited="true">
+                        <documentation>
+                            Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
+                        </documentation>
+                        <documentation>
+                            All derived content made available under Creative Commons Attribution 4.0
+                        </documentation>
+                    </metadata>
+                </dataset>
+                <dataset name="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2011-05.nc" ID="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2011-05.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/GBR4_H2p0_B3p1_Cq3b_Dhnd/monthly-monthly/EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2011-05.nc" dataType="Grid">
+                    <metadata inherited="true">
+                        <documentation>
+                            Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
+                        </documentation>
+                        <documentation>
+                            All derived content made available under Creative Commons Attribution 4.0
+                        </documentation>
+                    </metadata>
+                </dataset>
+                <dataset name="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2011-06.nc" ID="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2011-06.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/GBR4_H2p0_B3p1_Cq3b_Dhnd/monthly-monthly/EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2011-06.nc" dataType="Grid">
+                    <metadata inherited="true">
+                        <documentation>
+                            Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
+                        </documentation>
+                        <documentation>
+                            All derived content made available under Creative Commons Attribution 4.0
+                        </documentation>
+                    </metadata>
+                </dataset>
+                <dataset name="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2011-07.nc" ID="EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2011-07.nc" serviceName="all" urlPath="s3://aims-ereefs-public-test/derived/ncaggregate/ereefs/GBR4_H2p0_B3p1_Cq3b_Dhnd/monthly-monthly/EREEFS_AIMS-CSIRO_GBR4_H2p0_B3p1_Cq3b_Dhnd_bgc_monthly-monthly-sed-2011-07.nc" dataType="Grid">
+                    <metadata inherited="true">
+                        <documentation>
+                            Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
+                        </documentation>
+                        <documentation>
+                            All derived content made available under Creative Commons Attribution 4.0
+                        </documentation>
+                    </metadata>
+                </dataset>
+
+
+</catalog>

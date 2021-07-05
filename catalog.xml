@@ -11,4 +11,40 @@
     <!-- Show only a branch of a S3 bucket -->
     <catalogRef name="Data derived from the eReefs GBR4 v2 model" xlink:href="s3catalogue/aims-ereefs-public-test/derived/ncaggregate/ereefs/gbr4_v2/ongoing/catalog.xml" />
 
+
+    <dataset name="Derived Datasets">
+        <metadata inherited="true">
+            <documentation>
+                Original eReefs model outputs (mirror): http://data.aims.ereefs.org.au/thredds/catalog.html?dataset=derived-datasets
+            </documentation>
+            <documentation>
+                Original eReefs model outputs (NCI): http://dapds00.nci.org.au/thredds/catalogs/fx3/catalog.html
+            </documentation>
+            <documentation>
+                All derived content made available under Creative Commons Attribution 4.0 Australia.
+            </documentation>
+            <documentation>
+                See documentation for more information: http://data.aims.ereefs.org.au/thredds/catalog/readme/catalog.html?dataset=readme/README.txt
+            </documentation>
+        </metadata>
+
+        <dataset name="GBR4 Hydrodynamic v2 - daily aggregations" ID="derived-gbr4_v2-daily" urlPath="derived/gbr4_v2/daily-monthly">
+            <dataFormat>NetCDF</dataFormat>
+            <dataType>Grid</dataType>
+            <metadata inherited="true">
+                <documentation>
+                    Daily aggregations derived from the original eReefs GBR4 Hydrodynamic model outputs.
+                </documentation>
+            </metadata>
+            <serviceName>all</serviceName>
+            <netcdf xmlns="http://www.unidata.ucar.edu/namespaces/netcdf/ncml-2.2">
+                <aggregation dimName="time" type="joinExisting" >
+                    <scan location="/home/ereefs/derived/netcdf/ncaggregate/gbr4_v2/daily-monthly/"
+                          suffix=".nc" subdirs="false"/>
+                </aggregation>
+            </netcdf>
+        </dataset>
+    </dataset>
+
+
 </catalog>

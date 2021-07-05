@@ -157,28 +157,28 @@
 
     <!--
     Persist joinNew aggregations to named directory. scour every 24 hours, delete stuff older than 90 days
+    -->
     <AggregationCache>
       <scour>24 hours</scour>
       <maxAge>90 days</maxAge>
       <cachePathPolicy>NestedDirectory</cachePathPolicy>
     </AggregationCache>
-    -->
 
     <!--
     How to choose the template dataset for an aggregation. latest, random, or penultimate
+    -->
     <Aggregation>
       <typicalDataset>penultimate</typicalDataset>
     </Aggregation>
-    -->
 
     <!--
     The Netcdf Subset Service is off by default.
+    -->
     <NetcdfSubsetService>
-      <allow>false</allow>
+      <allow>true</allow>
       <scour>10 min</scour>
       <maxAge>-1 min</maxAge>
     </NetcdfSubsetService>
-    -->
 
     <!--
     <Opendap>
