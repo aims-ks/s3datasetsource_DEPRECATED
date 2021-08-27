@@ -1,7 +1,29 @@
 # S3 Dataset Source Plugin for [Unidata's THREDDS Project][1].
 
-Provides a simple implementation of the [thredds DatasetSource interface][2].  
-Allows datasets to reside in, and be accessed directly from S3 via the [THREDDS Data Server (TDS)][3].
+This project provides a simple implementation of the [thredds DatasetSource interface][2].  
+It allows datasets to reside in, and be accessed directly from S3 via the [THREDDS Data Server (TDS)][3].
+
+## Thomas Powell's S3DatasetSource plugin
+
+THREDDS do not have S3 capabilities. [Thomas Powell](https://github.com/tpowellmeto) developed a plugin, [S3DatasetSource][4], to add that capability.
+It can be used to manually link some NetCDF files from S3 to a THREDDS server.
+
+Note that the setup instructions in the `README.md` file are lacking some steps.
+For example, the S3 buckets `mogreps-g` and `mogreps-uk` are hardcoded in the `go.sh` file.
+
+The project creates a Docker container containing THREDDS and the S3DatasetSource plugin.
+We strongly suggest using the Docker container since it prevents issues with library versions
+and makes it much easier to maintain. It also takes care of setting up the S3 plugin in THREDDS.
+
+Adding S3 capability to an existing THREDDS setup is a lot more complex. There are no instructions describing the steps.
+The installation is defined in `Dockerfile`, `go.sh`, `ingest.py` and probably a few more files.
+It's more complex that is sounds. Use the Docker container if you can.
+
+## This S3DatasetSource branch
+
+The eReefs system periodically adds more NetCDF files to our S3 buckets, so it needs an extra functionality
+to be able to automatically refresh (aka harvest) the list of available NetCDF files from S3.
+The harvest process can be triggered periodically by a crontab entry.
 
 ## Configuration
 
