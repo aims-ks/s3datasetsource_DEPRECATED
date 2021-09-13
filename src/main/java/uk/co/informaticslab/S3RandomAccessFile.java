@@ -74,6 +74,7 @@ public class S3RandomAccessFile extends RandomAccessFile {
             return false;
         }
 
+        LOGGER.debug(String.format("Check if file exists on S3: %s:%s", this.bucket, this.key));
         return this.s3Client.doesObjectExist(this.bucket, this.key);
     }
 
@@ -83,7 +84,7 @@ public class S3RandomAccessFile extends RandomAccessFile {
     }
 
     /**
-     * After execution of this function, the given block is guranteed to
+     * After execution of this function, the given block is guaranteed to
      * be in the cache.
      */
     private void ensure(long key) throws IOException {
@@ -154,6 +155,7 @@ public class S3RandomAccessFile extends RandomAccessFile {
     }
 
     private int read__(long pos, byte[] buff, int offset, int len) throws IOException {
+        LOGGER.debug(String.format("Read chunk from %d, len %d from S3: %s:%s", pos, len, this.bucket, this.key));
         GetObjectRequest rangeObjectRequest = new GetObjectRequest(this.bucket, this.key);
         rangeObjectRequest.setRange(pos, pos + len - 1);
 
@@ -176,7 +178,7 @@ public class S3RandomAccessFile extends RandomAccessFile {
 
     @Override
     public long readToByteChannel(WritableByteChannel dest, long offset, long nbytes) throws IOException {
-        LOGGER.debug(String.format("reading %d bytes from offset %d to byte channel", nbytes, offset));
+        LOGGER.debug(String.format("Reading %d bytes from offset %d to byte channel from S3: %s:%s", nbytes, offset, this.bucket, this.key));
 
         int n = (int) nbytes;
         byte[] buff = new byte[n];
