@@ -161,7 +161,7 @@ Documentation about how to create an updated docker image for THREDDS with S3 su
     ```
     to
     ```
-    FROM unidata/thredds-docker:4.6.14
+    FROM unidata/thredds-docker:4.6.19
     ```
 
 4. Create the docker container

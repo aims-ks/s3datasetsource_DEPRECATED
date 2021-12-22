@@ -32,7 +32,7 @@
         <dependency>
             <groupId>edu.ucar</groupId>
             <artifactId>tds</artifactId>
-            <version>4.6.10</version>
+            <version>4.6.19</version>
             <classifier>classes</classifier>
         </dependency>
 
