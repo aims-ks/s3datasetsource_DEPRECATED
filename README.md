@@ -1,3 +1,7 @@
+# DEPRECATED
+
+This project is Deprecated. THREDDS 5 now has native support for AWS S3.
+
 # S3 Dataset Source Plugin for [Unidata's THREDDS Project][1].
 
 This project provides a simple implementation of the [thredds DatasetSource interface][2].  
